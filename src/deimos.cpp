@@ -30,7 +30,7 @@
 	// class includes ]
 
 	// [ function includes
-		#include "SDL_functions.h"
+		#include "SDLClass.h"
 	// function includes ]
 /***************************************/
 
@@ -54,7 +54,7 @@ int main(int argc, char* args[]){
 	bool terminate_program = false;
 
 	// initialize SDL
-	if(sdl::init() == false){ return 1; }
+	if(SDL::init() == false){ return 1; }
 
 	// set window manager title
 	SDL_WM_SetCaption("Ultimate Shooting Game", NULL);
@@ -91,9 +91,9 @@ int main(int argc, char* args[]){
 
 			SDL_Surface *bg1,*bg2,*bg3 = NULL;
 
-			bg1 = sdl::load_image("images/bg_space.gif");
-			bg2 = sdl::load_image("images/bg2.png");
-			bg3 = sdl::load_image("images/bg3.png");
+			bg1 = SDL::load_image("images/bg_space.gif");
+			bg2 = SDL::load_image("images/bg2.png");
+			bg3 = SDL::load_image("images/bg3.png");
 
 			int bg1_x_offset = 0;
 			int bg1_y_offset = SCREEN_HEIGHT - bg1->h;
@@ -105,13 +105,13 @@ int main(int argc, char* args[]){
 
 		// [ load player sprite
 			SDL_Surface *player_sprite = NULL;
-			player_sprite = sdl::load_image("images/player.png");
+			player_sprite = SDL::load_image("images/player.png");
 		// load player sprite ]
 
 		// [ load bullet sprite
 			SDL_Surface *bullet_sprite, *pretzel_sprite = NULL;
-			bullet_sprite = sdl::load_image("images/bullet.png");
-			pretzel_sprite = sdl::load_image("images/pretzel.png");
+			bullet_sprite = SDL::load_image("images/bullet.png");
+			pretzel_sprite = SDL::load_image("images/pretzel.png");
 		// load bullet sprite ]
 
 	/****************************************
@@ -185,33 +185,33 @@ int main(int argc, char* args[]){
 
 			// [ background scrolling
 				if(bg1_x_offset <= -bg1->w){ bg1_x_offset = 0; }
-				sdl::apply_surface( bg1_x_offset, bg1_y_offset, bg1, sdl::screen );
-				sdl::apply_surface( bg1_x_offset + bg1->w, bg1_y_offset, bg1, sdl::screen );
-				sdl::apply_surface( bg1_x_offset + 2 * bg1->w, bg1_y_offset, bg1, sdl::screen );
+				SDL::apply_surface( bg1_x_offset, bg1_y_offset, bg1, screen );
+				SDL::apply_surface( bg1_x_offset + bg1->w, bg1_y_offset, bg1, screen );
+				SDL::apply_surface( bg1_x_offset + 2 * bg1->w, bg1_y_offset, bg1, screen );
 
 				if(bg2_x_offset <= -bg2->w){ bg2_x_offset = 0; }
-				sdl::apply_surface( bg2_x_offset, bg2_y_offset, bg2, sdl::screen );
-				sdl::apply_surface( bg2_x_offset + bg2->w, bg2_y_offset, bg2, sdl::screen );
+				SDL::apply_surface( bg2_x_offset, bg2_y_offset, bg2, screen );
+				SDL::apply_surface( bg2_x_offset + bg2->w, bg2_y_offset, bg2, screen );
 
 				if(bg3_x_offset <= -bg3->w){ bg3_x_offset = 0; }
-				sdl::apply_surface( bg3_x_offset, bg3_y_offset, bg3, sdl::screen );
-				sdl::apply_surface( bg3_x_offset + bg3->w, bg3_y_offset, bg3, sdl::screen );
+				SDL::apply_surface( bg3_x_offset, bg3_y_offset, bg3, screen );
+				SDL::apply_surface( bg3_x_offset + bg3->w, bg3_y_offset, bg3, screen );
 
 				bg1_x_offset -= 1;
 				bg2_x_offset -= 3;
 				bg3_x_offset -= 5;
 			// background scrolling ]
 
-			while(SDL_PollEvent(&sdl::event)){
-				if(sdl::event.type == SDL_QUIT){
+			while(SDL_PollEvent(&event)){
+				if(event.type == SDL_QUIT){
 					terminate_program = true;
 				}
-				if(sdl::event.type == SDL_KEYDOWN){
-					if(sdl::event.key.keysym.sym == SDLK_PAGEUP){
+				if(event.type == SDL_KEYDOWN){
+					if(event.key.keysym.sym == SDLK_PAGEUP){
 						player->update_streams(0);	// add streams`
 						break;
 					}
-					if(sdl::event.key.keysym.sym == SDLK_PAGEDOWN){
+					if(event.key.keysym.sym == SDLK_PAGEDOWN){
 						player->update_streams(1);	// subtract streams
 						break;
 					}
@@ -231,8 +231,8 @@ int main(int argc, char* args[]){
 				// shoot
 				if(key[SDLK_z]){
 					if(player->can_shoot() == true){
-						player->shoot();
 						Mix_PlayChannel(-1,laser,0);
+						player->shoot();
 					}
 				}
 			// handle key strokes ]
@@ -247,10 +247,10 @@ int main(int argc, char* args[]){
 
 					 // Feb 13, 2009: separated deletion loop
 					 // because the elements were pulled forwards
-					 // before all the elements were off the sdl::screen
+					 // before all the elements were off the screen
 					 // causing some lag in the first bullet.
 					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
-						 // if bullet is off sdl::screen erase it
+						 // if bullet is off screen erase it
 						if(world->get_bullets()->at(i)->get_x_offset() >= SCREEN_WIDTH
 							 || world->get_bullets()->at(i)->get_y_offset() >= SCREEN_HEIGHT
 							 || world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() <= 0
@@ -264,28 +264,28 @@ int main(int argc, char* args[]){
 				}
 				// draw the bullets
 				for(Uint i = 0; i < world->get_bullets()->size(); i++){
-					sdl::apply_surface( int( world->get_bullets()->at(i)->get_x_offset() ), int( world->get_bullets()->at(i)->get_y_offset() ), bullet_sprite, sdl::screen );
+					SDL::apply_surface( int( world->get_bullets()->at(i)->get_x_offset() ), int( world->get_bullets()->at(i)->get_y_offset() ), bullet_sprite, screen );
 				}
 			// shoot existing bullets ]
 
-			// [ apply player sprite to sdl::screen
-				sdl::apply_surface( int(player->get_x_offset()), int(player->get_y_offset()), player_sprite, sdl::screen );
-			// apply player sprite to sdl::screen ]
+			// [ apply player sprite to screen
+				SDL::apply_surface( int(player->get_x_offset()), int(player->get_y_offset()), player_sprite, screen );
+			// apply player sprite to screen ]
 
-			// [ apply player info to sdl::screen
-				sdl::apply_surface(5, 5, health_info_s, sdl::screen);
-				sdl::apply_surface(5, 22, points_info_s, sdl::screen);
-				sdl::apply_surface(5, 39, shield_info_s, sdl::screen);
-				sdl::apply_surface(5, 56, stream_info_s, sdl::screen);
+			// [ apply player info to screen
+				SDL::apply_surface(5, 5, health_info_s, screen);
+				SDL::apply_surface(5, 22, points_info_s, screen);
+				SDL::apply_surface(5, 39, shield_info_s, screen);
+				SDL::apply_surface(5, 56, stream_info_s, screen);
 
-			// apply info to sdl::screen]
+			// apply info to screen]
 
 
-			// [ update sdl::screen
-				if( SDL_Flip( sdl::screen ) == -1 ){
+			// [ update screen
+				if( SDL_Flip( screen ) == -1 ){
 					return 1;
 				}
-			// update sdl::screen ]
+			// update screen ]
 
 
 			// [ calculate FPS

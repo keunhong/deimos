@@ -16,10 +16,9 @@
  */
 template<class T>
 class Bullet : public Entity<T>{
-	World<T>	*world;
 	const Entity<T>	*owner;
-	int 		power;
-	float		angle;
+	int 			power;
+	float			angle;
 
 public:
 	Bullet(
@@ -35,14 +34,19 @@ public:
 			SDL_Surface 	*_sprite
 	)
 	{
-		world			= _world;
+		// [ these are in the parent object
+			// ! this-> is needed to access the private parent object data items
+			this->set_world( _world );
+			this->set_x_offset( _x_offset );
+			this->set_y_offset( _y_offset );
+			this->set_min_speed( _min_speed );
+			this->set_max_speed( _max_speed );
+			this->set_acceleration( _acceleration );
+			this->set_sprite( _sprite );
+			this->set_collision_box(); // MUST come after sprite is defined or game will crash
+		// these are in the parent object ]
+
 		owner			= _owner;
-		this->set_x_offset( _x_offset );
-		this->set_y_offset( _y_offset );
-		this->set_min_speed( _min_speed );
-		this->set_max_speed( _max_speed );
-		this->set_acceleration( _acceleration );
-		this->set_sprite( _sprite );
 		power			= _power;
 		angle 			= _angle;
 

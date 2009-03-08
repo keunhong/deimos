@@ -8,8 +8,10 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-template<class T>
-class Bullet;
+// [ class prototypes
+	template<class T> class Bullet;
+	template<class T> class Enemy;
+// class prototypes ]
 
 /*
  * World class
@@ -19,7 +21,8 @@ class Bullet;
  */
 template<class T>
 class World{
-	std::vector< Bullet<T>* > *bullets;
+	std::vector< Bullet<T>* >	*bullets;
+	std::vector< Enemy<T>* >	*enemies;
 
 	public:
 		// constructor

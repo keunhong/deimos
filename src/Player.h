@@ -7,10 +7,9 @@
 #define PLAYER_H_
 
 
-// *** prototype for Bullet class
-	template<class T>
-	class Bullet;
-// prototype for Bullet class ***
+// [ class prototypes
+	template<class T> class Bullet;
+// class prototypes  ]
 
 /*
  * Player class
@@ -59,7 +58,7 @@ public:
 			this->set_max_speed( _max_speed );
 			this->set_acceleration( _acceleration );
 			this->set_sprite( _sprite );
-			this->set_collision_box();
+			this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 
 		points = 0;

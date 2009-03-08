@@ -35,6 +35,7 @@ public:
 	T get_sprite() const{ return sprite; }
 	Uint get_width() const{ return sprite->w; }
 	Uint get_height() const{ return sprite->h; }
+	SDL_Rect * get_collision_box() const{ return collision_box; }
 
 	void set_world(World<T> *_world){ world = _world; }
 	void set_x_offset(T _x_offset){ x_offset = _x_offset; }
@@ -48,6 +49,23 @@ public:
 		collision_box.y = Sint16(y_offset);
 		collision_box.w = get_width();
 		collision_box.h = get_height();
+	}
+
+	bool check_collision(Entity<T> *other){
+		int this_north 	= this->get_collision_box()->y;
+		int this_south	= this->get_collision_box()->y + this->get_collision_box()->h;
+		int this_east	= this->get_collision_box()->x + this->get_collision_box()->w;
+		int this_west 	= this->get_collision_box()->x;
+
+		int other_north = other->get_collision_box()->y;
+		int other_south	= other->get_collision_box()->y + other->get_collision_box()->h;
+		int other_east	= other->get_collision_box()->x + other->get_collision_box()->w;
+		int other_west 	= other->get_collision_box()->x;
+
+		return ( this_north >= other_south ||
+				this_south <= other_north ||
+				this_east <= other_west ||
+				this_west >= other_east )? false : true ;
 	}
 };
 
