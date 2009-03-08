@@ -20,7 +20,7 @@
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.debug.1631077353" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.debug"/>
 <builder buildPath="${workspace_loc:/deimos_shooter/Debug}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1700751009" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 <tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.756273681" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug">
-<option id="gnu.both.asm.option.include.paths.1697763895" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+<option id="gnu.both.asm.option.include.paths.1697763895" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/deimos_shooter/SDL}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.2089832126" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -38,10 +38,11 @@
 </tool>
 <tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.1526606388" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.2131800559" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug">
-<option id="gnu.cpp.link.option.paths.1426822677" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+<option id="gnu.cpp.link.option.paths.1426822677" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/deimos_shooter/lib}&quot;"/>
 </option>
-<option id="gnu.cpp.link.option.libs.648156807" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<option id="gnu.cpp.link.option.libs.648156807" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="mingw32"/>
 <listOptionValue builtIn="false" value="SDLmain"/>
 <listOptionValue builtIn="false" value="SDL_image"/>

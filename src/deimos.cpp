@@ -12,6 +12,7 @@
 		#include "SDL/SDL.h"
 		#include "SDL/SDL_image.h"
 		#include "SDL/SDL_ttf.h"
+		#include "SDL/SDL_mixer.h"
 	// SDL include ]
 
 	// [ definition includes
@@ -69,6 +70,14 @@ int main(int argc, char* args[]){
 		font = TTF_OpenFont( "ttf/FreeSans.ttf", 14 );
 		SDL_Color font_color = {255,255,255};
 	// load font data ]
+
+	// [ load music data
+		Mix_Music *bg_music = NULL;
+		Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
+		bg_music = Mix_LoadMUS("sounds/bg_music1.mp3");
+		Mix_PlayMusic(bg_music,-1);
+
+	// load music data ]
 
 
 	/******************************************
@@ -135,6 +144,7 @@ int main(int argc, char* args[]){
 		// set null pointer to store key state
 		Uint8 *key = SDL_GetKeyState( NULL );
 		while(terminate_program == false){
+
 
 			// start FPS regulatiion timer
 			fps_regulate.start();
