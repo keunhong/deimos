@@ -73,8 +73,12 @@ int main(int argc, char* args[]){
 
 	// [ load music data
 		Mix_Music *bg_music = NULL;
+		Mix_Chunk *laser = NULL;
+
 		Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
+
 		bg_music = Mix_LoadMUS("sounds/bg_music1.mp3");
+		laser = Mix_LoadWAV("sounds/laser.wav");
 		Mix_PlayMusic(bg_music,-1);
 
 	// load music data ]
@@ -228,6 +232,7 @@ int main(int argc, char* args[]){
 				if(key[SDLK_z]){
 					if(player->can_shoot() == true){
 						player->shoot();
+						Mix_PlayChannel(-1,laser,0);
 					}
 				}
 			// handle key strokes ]
