@@ -59,6 +59,7 @@ public:
 			this->set_max_speed( _max_speed );
 			this->set_acceleration( _acceleration );
 			this->set_sprite( _sprite );
+			this->set_collision_box();
 		// these are in the parent object ]
 
 		points = 0;
