@@ -229,7 +229,7 @@ int main(int argc, char* args[]){
 						// update status text
 						stream_info_sstream.clear(); stream_info_sstream.str("");
 						stream_info_sstream << "Bullet Streams: " << player->get_streams();
-						if(player->get_streams() == 48){ stream_info_sstream << " (MAX)"; }
+						if(player->get_streams() == 36){ stream_info_sstream << " (MAX)"; }
 						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
 						// update streams

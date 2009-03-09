@@ -110,7 +110,7 @@ public:
 
 	// sets the amount of bullet streams
 	void update_streams(bool action){		// 0 stands for addition, 1 for subtraction
-		if(action == 0 && bullet_streams < 47){
+		if(action == 0 && bullet_streams < 35){
 			bullet_streams += 2;	// add 2
 		}
 		if(action == 1 && bullet_streams > 0){
