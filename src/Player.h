@@ -122,7 +122,7 @@ public:
 		if(bullet_streams == 0){
 			base_shot( 0 );	// simple straight shot
 		}
-		if(bullet_streams %2 == 0){		// must be even amount of streams
+		if(bullet_streams %2 == 0 && bullet_streams > 0){		// must be even amount of streams
 			base_shot( 0 ); 						// base shot is always there
 			for(Uint i = 1; i<= bullet_streams/2; i++){
 				base_shot( PI/24 * i );		// bullets go up

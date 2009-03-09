@@ -154,6 +154,17 @@ int main(int argc, char* args[]){
 					SCREEN_WIDTH / 2,
 					SCREEN_HEIGHT / 2
 				);
+
+				Spawn<float>::enemy(
+					world,
+					enemy_sprite,
+					10,
+					10,
+					0,
+					0,
+					SCREEN_WIDTH / 2,
+					SCREEN_HEIGHT / 2 - 50
+				);
 			// debug ]
 
 	/***************************************/
@@ -273,7 +284,9 @@ int main(int argc, char* args[]){
 				if(world->get_enemies()->empty() == false){
 					for(Uint i = 0; i < world->get_enemies()->size(); i++){
 						if(world->get_enemies()->at(i)->check_collision(player) == true){
-							SDL_WM_SetCaption( "collides!", NULL );
+							SDL_WM_SetCaption( "Player and Enemy Collision!", NULL );
+						}else{
+							SDL_WM_SetCaption( "Idle", NULL );
 						}
 						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), enemy_sprite, screen );
 					}
@@ -284,7 +297,17 @@ int main(int argc, char* args[]){
 				if(world->get_bullets()->empty() == false){
 					// loop through all elements
 					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
-						 world->get_bullets()->at(i)->move();
+						world->get_bullets()->at(i)->move();
+
+						for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
+							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
+								delete world->get_bullets()->at(i);
+								world->get_bullets()->erase(world->get_bullets()->begin() + i);
+
+								delete world->get_enemies()->at(j);
+								world->get_enemies()->erase(world->get_enemies()->begin() + j);
+							}
+						}
 					 }
 
 					 // Feb 13, 2009: separated deletion loop
@@ -295,8 +318,8 @@ int main(int argc, char* args[]){
 						 // if bullet is off screen erase it
 						if(world->get_bullets()->at(i)->get_x_offset() >= SCREEN_WIDTH
 							 || world->get_bullets()->at(i)->get_y_offset() >= SCREEN_HEIGHT
-							 || world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() <= 0
-							 || world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() <= 0
+							 //|| world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() <= 0
+							 //|| world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() <= 0
 						)
 						{
 							delete world->get_bullets()->at(i);
@@ -335,13 +358,13 @@ int main(int argc, char* args[]){
 					fps_update.start();
 					frames = 0;
 				}
-				if( fps_update.get_ticks() > 1000 ){
+				/*if( fps_update.get_ticks() > 1000 ){
 					caption.clear();
 					caption.str("");
 					caption << "Average Frames Per Second: " << frames / ( fps_measure.get_ticks() / 1000.f );
 					SDL_WM_SetCaption( caption.str().c_str(), NULL );
 					fps_update.start();
-				}
+				}*/ // commented to test collision
 			// calculate FPS ]
 
 			// [ regulate FPS
