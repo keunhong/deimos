@@ -35,16 +35,23 @@ class SoundEngine : public Engine<T>{
 		void set_muted_status(bool status){
 			if(status == true){
 				muted_status = true;
-
+				Mix_PauseMusic();
+			}else{
+				muted_status = false;
+				Mix_ResumeMusic();
 			}
 		}
 		bool get_muted_status() const{ return muted_status; }
 
 		void play_bg_music(){
-			Mix_PlayMusic( bg_music, -1 );
+			if( get_muted_status() == false){
+				Mix_PlayMusic( bg_music, -1 );
+			}
 		}
 		void play_shoot_sound(){
-			Mix_PlayChannel( -1, shoot_sound, 0 );
+			if( get_muted_status() == false){
+				Mix_PlayChannel( -1, shoot_sound, 0 );
+			}
 		}
 };
 

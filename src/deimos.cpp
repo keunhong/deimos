@@ -243,6 +243,9 @@ int main(int argc, char* args[]){
 						player->update_streams(1);	// subtract streams
 						break;
 					}
+					if(event.key.keysym.sym == SDLK_m){
+						sound_engine->set_muted_status( sound_engine->get_muted_status()? false : true );
+					}
 				}
 			}
 
