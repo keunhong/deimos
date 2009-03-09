@@ -100,6 +100,11 @@ int main(int argc, char* args[]){
 			enemy_sprite = SDL::load_image("images/enemy.png");
 		// load enemy sprite ]
 
+		// [ load explosion sprite
+			SDL_Surface *explosion_sprite = NULL;
+			explosion_sprite = SDL::load_image("images/explosion.png");
+		// load explosion sprite ]
+
 	/****************************************
 	*** INITIALIZE STUFF
 	****************************************/
@@ -298,6 +303,9 @@ int main(int argc, char* args[]){
 
 						for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
 							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
+
+								SDL::apply_surface(int(world->get_enemies()->at(j)->get_x_offset()),int(world->get_enemies()->at(j)->get_y_offset()),explosion_sprite,screen);
+
 								delete world->get_bullets()->at(i);
 								world->get_bullets()->erase(world->get_bullets()->begin() + i);
 
@@ -324,11 +332,12 @@ int main(int argc, char* args[]){
 						}
 					 }
 				}
-				// draw the bullets
+			// draw the bullets
 				for(Uint i = 0; i < world->get_bullets()->size(); i++){
 					SDL::apply_surface( int( world->get_bullets()->at(i)->get_x_offset() ), int( world->get_bullets()->at(i)->get_y_offset() ), bullet_sprite, screen );
 				}
 			// shoot existing bullets ]
+
 
 			// [ apply player sprite to screen
 				SDL::apply_surface( int(player->get_x_offset()), int(player->get_y_offset()), player_sprite, screen );
