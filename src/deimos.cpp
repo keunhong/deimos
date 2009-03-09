@@ -24,6 +24,7 @@
 		#include "Engine.h"
 		#include "TextEngine.h"
 		#include "SoundEngine.h"
+		#include "Effects.h"
 		#include "World.h"
 		#include "Spawn.h"
 		#include "Entity.h"
@@ -115,6 +116,9 @@ int main(int argc, char* args[]){
 		// [ initilize display engine
 			TextEngine<float>* text_engine = new TextEngine<float>();
 		// initialize display engine ]
+
+
+		//Explode *explode = new Explode();
 
 		// [ initilize sound engine
 			SoundEngine<float>* sound_engine = new SoundEngine<float>("sounds/bg_music1.mp3","sounds/laser.wav");
@@ -309,6 +313,11 @@ int main(int argc, char* args[]){
 										int( world->get_enemies()->at(j)->get_y_offset() + ( enemy_sprite->h - explosion_sprite->h ) / 2 ),
 										explosion_sprite,screen
 								);
+
+
+
+								//explode->explode(float(world->get_enemies()->at(j)->get_x_offset()),float(world->get_enemies()->at(j)->get_y_offset()));
+
 
 								delete world->get_bullets()->at(i);
 								world->get_bullets()->erase(world->get_bullets()->begin() + i);
