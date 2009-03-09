@@ -51,6 +51,9 @@ class Spawn{
 					_angle,
 					_sprite
 			);
+
+			_world->add_bullet( new_bullet );
+
 			return new_bullet;
 		}
 
@@ -97,6 +100,9 @@ class Spawn{
 					_x_offset,
 					_y_offset
 			);
+
+			_world->add_enemy( new_enemy );
+
 			return new_enemy;
 		}
 

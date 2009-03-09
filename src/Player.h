@@ -91,7 +91,7 @@ public:
 	void base_shot(float angle){
 		set_bullet_last_shot();
 
-		Bullet<T> *new_bullet = Spawn<T>::bullet(
+		Spawn<T>::bullet(
 				this->get_world(),
 				this,			// owner
 				bullet_speed,	// min_speed (bullets wont accelerate just yet..)
@@ -103,8 +103,6 @@ public:
 				angle,			// angle
 				bullet_sprite	// bullet_sprite
 		);
-
-		this->get_world()->add_bullet( new_bullet );
 
 		//Bullet<T> temp_bullet( *this, bullet_speed, 10, angle, bullet_width, bullet_height );
 		//bullets.push_back(temp_bullet);

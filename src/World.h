@@ -56,18 +56,9 @@ class World{
 			bullets->push_back( _bullet );
 		}
 
-		void spawn_enemy(SDL_Surface *_sprite){
-			Enemy<T>* new_enemy = Spawn<T>::enemy(
-					this,
-					_sprite,
-					10,
-					10,
-					0,
-					0,
-					SCREEN_WIDTH / 2,
-					SCREEN_HEIGHT / 2
-			);
-			enemies->push_back( new_enemy );
+		// for debugging at the moment
+		void add_enemy(Enemy<T> *_enemy){
+			enemies->push_back( _enemy );
 		}
 };
 

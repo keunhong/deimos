@@ -21,6 +21,9 @@
 
 	// [ class includes
 		#include "Timer.h"
+		#include "Engine.h"
+		#include "Display.h"
+		#include "Sound.h"
 		#include "World.h"
 		#include "Spawn.h"
 		#include "Entity.h"
@@ -56,9 +59,6 @@ int main(int argc, char* args[]){
 	// initialize SDL
 	if(SDL::init() == false){ return 1; }
 
-	// set window manager title
-	SDL_WM_SetCaption("Ultimate Shooting Game", NULL);
-
 	// [ load font data
 		TTF_Font *font = NULL;
 		SDL_Surface *health_info_s = NULL, // _s stands for surface
@@ -68,18 +68,6 @@ int main(int argc, char* args[]){
 		font = TTF_OpenFont( "ttf/FreeSans.ttf", 14 );
 		SDL_Color font_color = {255,255,255};
 	// load font data ]
-
-	// [ load music data
-		Mix_Music *bg_music = NULL;
-		Mix_Chunk *laser = NULL;
-
-		Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
-
-		bg_music = Mix_LoadMUS("sounds/bg_music1.mp3");
-		laser = Mix_LoadWAV("sounds/laser.wav");
-		Mix_PlayMusic(bg_music,-1);
-
-	// load music data ]
 
 
 	/******************************************
@@ -119,6 +107,20 @@ int main(int argc, char* args[]){
 	/****************************************
 	*** INITIALIZE STUFF
 	****************************************/
+		// [ initialize engine
+			//Engine<float>* engine = new Engine<float>();
+		// initialize engine ]
+
+		// [ initilize display engine
+			DisplayEngine<float>* display_engine = new DisplayEngine<float>();
+		// initialize display engine ]
+
+		// [ initilize sound engine
+			SoundEngine<float>* sound_engine = new SoundEngine<float>("sounds/bg_music1.mp3","sounds/laser.wav");
+
+			sound_engine->play_bg_music();
+		// initialize sound engine ]
+
 		// [ initialize world
 			World<float>* world = new World<float>();
 		// initialize world ]
@@ -142,7 +144,16 @@ int main(int argc, char* args[]){
 
 
 			// [ debug
-				world->spawn_enemy(enemy_sprite);
+				Spawn<float>::enemy(
+					world,
+					enemy_sprite,
+					10,
+					10,
+					0,
+					0,
+					SCREEN_WIDTH / 2,
+					SCREEN_HEIGHT / 2
+				);
 			// debug ]
 
 	/***************************************/
@@ -248,7 +259,7 @@ int main(int argc, char* args[]){
 				// shoot
 				if(key[SDLK_z]){
 					if(player->can_shoot() == true){
-						Mix_PlayChannel(-1,laser,0);
+						sound_engine->play_shoot_sound();
 						player->shoot();
 					}
 				}
