@@ -13,6 +13,7 @@
 #ifndef SDL_FUNCTIONS_H_
 #define SDL_FUNCTIONS_H_
 
+
 // [ set SDL surface pointers
 	SDL_Surface *screen = NULL;
 // set SDL surface pointers ]
@@ -26,7 +27,7 @@ class SDL{
 		/********************************************
 		*** Function for loading images
 		********************************************/
-		static SDL_Surface *load_image( char *filename ){
+		static SDL_Surface * load_image( char *filename ){
 			// set pointer for original image
 			SDL_Surface *original_image = NULL;
 
@@ -61,7 +62,6 @@ class SDL{
 			SDL_BlitSurface(source, NULL, destination, &offset);
 		}
 		/********************************************/
-
 
 		/****************************************
 		*** Function for Initializing SDL

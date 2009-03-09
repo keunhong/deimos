@@ -23,7 +23,7 @@ class Entity{
 	T max_speed;
 	T acceleration;
 	SDL_Surface *sprite;
-	SDL_Rect collision_box;
+	SDL_Rect *collision_box;
 
 public:
 	World<T> * get_world() const{ return world; }
@@ -45,10 +45,11 @@ public:
 	void set_acceleration(T _acceleration){ acceleration = _acceleration; }
 	void set_sprite( SDL_Surface *_sprite ){ sprite = _sprite; }
 	void set_collision_box(){
-		collision_box.x = Sint16(x_offset);
-		collision_box.y = Sint16(y_offset);
-		collision_box.w = get_width();
-		collision_box.h = get_height();
+		collision_box = new SDL_Rect;
+		collision_box->x = Sint16(x_offset);
+		collision_box->y = Sint16(y_offset);
+		collision_box->w = get_width();
+		collision_box->h = get_height();
 	}
 
 	bool check_collision(Entity<T> *other){

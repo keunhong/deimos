@@ -61,12 +61,10 @@ int main(int argc, char* args[]){
 
 	// [ load font data
 		TTF_Font *font = NULL;
-		SDL_Surface *text,				// _s stands for surface, to not confuse later on
-					*health_info_s,
-					*points_info_s,
-					*shield_info_s,
-					*stream_info_s
-					= NULL;
+		SDL_Surface *health_info_s = NULL, // _s stands for surface
+					*points_info_s = NULL,
+					*shield_info_s = NULL,
+					*stream_info_s = NULL;
 		font = TTF_OpenFont( "ttf/FreeSans.ttf", 14 );
 		SDL_Color font_color = {255,255,255};
 	// load font data ]
@@ -109,10 +107,14 @@ int main(int argc, char* args[]){
 		// load player sprite ]
 
 		// [ load bullet sprite
-			SDL_Surface *bullet_sprite, *pretzel_sprite = NULL;
+			SDL_Surface *bullet_sprite = NULL;
 			bullet_sprite = SDL::load_image("images/bullet.png");
-			pretzel_sprite = SDL::load_image("images/pretzel.png");
 		// load bullet sprite ]
+
+		// [ load enemy sprite
+			SDL_Surface *enemy_sprite = NULL;
+			enemy_sprite = SDL::load_image("images/enemy.png");
+		// load enemy sprite ]
 
 	/****************************************
 	*** INITIALIZE STUFF
@@ -136,8 +138,35 @@ int main(int argc, char* args[]){
 					300				// bullet_delay
 			);
 		// initialize player ]
+
+
+
+			// [ debug
+				world->spawn_enemy(enemy_sprite);
+			// debug ]
+
 	/***************************************/
 
+		std::stringstream health_info;
+		std::stringstream points_info;
+		std::stringstream shield_info;
+		std::stringstream stream_info;
+		std::stringstream caption;
+
+		// [ Set up player information for drawing
+			health_info << "Health: " << player->get_health();
+			health_info_s = TTF_RenderText_Blended(font, health_info.str().c_str(), font_color);
+
+			points_info << "Points: " << player->get_points();
+			points_info_s = TTF_RenderText_Blended(font, points_info.str().c_str(), font_color);
+
+			shield_info << "Shield: " << player->get_shield();
+			shield_info_s = TTF_RenderText_Blended(font, shield_info.str().c_str(), font_color);
+
+			stream_info << "Bullet Streams: " << player->get_streams();
+			if(player->get_streams() == 48){ stream_info << " (MAX)"; }
+			stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
+		// Set up player info for drawing ]
 
 	/******************************************
 	*** Start Loop
@@ -148,40 +177,11 @@ int main(int argc, char* args[]){
 		// set null pointer to store key state
 		Uint8 *key = SDL_GetKeyState( NULL );
 		while(terminate_program == false){
-
-
 			// start FPS regulatiion timer
 			fps_regulate.start();
 
 			// fill screen with black surface to clear
 			//SDL_FillRect( SDL_GetVideoSurface(), NULL, 0 );
-
-			// [ FPS test text
-				std::stringstream lol;
-				lol << frames;
-				text = TTF_RenderText_Blended( font, lol.str().c_str(),  font_color);
-			// FPS test text ]
-
-			// [ Set up player information for drawing
-				std::stringstream health_info;
-				std::stringstream points_info;
-				std::stringstream shield_info;
-				std::stringstream stream_info;
-
-				health_info << "Health: " << player->get_health();
-				health_info_s = TTF_RenderText_Blended(font, health_info.str().c_str(), font_color);
-
-				points_info << "Points: " << player->get_points();
-				points_info_s = TTF_RenderText_Blended(font, points_info.str().c_str(), font_color);
-
-				shield_info << "Shield: " << player->get_shield();
-				shield_info_s = TTF_RenderText_Blended(font, shield_info.str().c_str(), font_color);
-
-				stream_info << "Bullet Streams: " << player->get_streams();
-				if(player->get_streams() == 48){ stream_info << " (MAX)"; }
-				stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
-
-			// Set up player info for drawing ]
 
 			// [ background scrolling
 				if(bg1_x_offset <= -bg1->w){ bg1_x_offset = 0; }
@@ -208,10 +208,27 @@ int main(int argc, char* args[]){
 				}
 				if(event.type == SDL_KEYDOWN){
 					if(event.key.keysym.sym == SDLK_PAGEUP){
+
+						SDL_FreeSurface( stream_info_s );
+
+						//delete stream_info_s;
+						stream_info.clear(); stream_info.str("");
+						stream_info << "Bullet Streams: " << player->get_streams();
+						if(player->get_streams() == 48){ stream_info << " (MAX)"; }
+						stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
+
 						player->update_streams(0);	// add streams`
 						break;
 					}
 					if(event.key.keysym.sym == SDLK_PAGEDOWN){
+
+						SDL_FreeSurface( stream_info_s );
+
+						//delete stream_info_s;
+						stream_info.clear(); stream_info.str("");
+						stream_info << "Bullet Streams: " << player->get_streams();
+						stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
+
 						player->update_streams(1);	// subtract streams
 						break;
 					}
@@ -237,6 +254,17 @@ int main(int argc, char* args[]){
 				}
 			// handle key strokes ]
 
+
+			// [ show enemies
+				if(world->get_enemies()->empty() == false){
+					for(Uint i = 0; i < world->get_enemies()->size(); i++){
+						if(world->get_enemies()->at(i)->check_collision(player) == true){
+							SDL_WM_SetCaption( "collides!", NULL );
+						}
+						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), enemy_sprite, screen );
+					}
+				}
+			// show enemies ]
 
 			// [ shoot existing bullets
 				if(world->get_bullets()->empty() == false){
@@ -294,7 +322,8 @@ int main(int argc, char* args[]){
 					frames = 0;
 				}
 				if( fps_update.get_ticks() > 1000 ){
-					std::stringstream caption;
+					caption.clear();
+					caption.str("");
 					caption << "Average Frames Per Second: " << frames / ( fps_measure.get_ticks() / 1000.f );
 					SDL_WM_SetCaption( caption.str().c_str(), NULL );
 					fps_update.start();
@@ -317,14 +346,8 @@ int main(int argc, char* args[]){
 	SDL_FreeSurface( bg3 );
 
 	SDL_FreeSurface( player_sprite );
-	SDL_FreeSurface( pretzel_sprite);
 	SDL_FreeSurface( bullet_sprite );
-
-	SDL_FreeSurface( text );
-	SDL_FreeSurface( health_info_s );
-	SDL_FreeSurface( points_info_s );
-	SDL_FreeSurface( shield_info_s );
-	SDL_FreeSurface( stream_info_s );
+	SDL_FreeSurface( enemy_sprite );
 
 	// quit SDL
 	SDL_Quit();

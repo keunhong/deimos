@@ -9,14 +9,10 @@
 #define SPAWN_H_
 
 // [ class prototypes
-	template<class T>
-	class Bullet;
-	template<class T>
-	class Entity;
-	template<class T>
-	class Player;
-	template<class T>
-	class Enemy;
+	template<class T> class Bullet;
+	template<class T> class Entity;
+	template<class T> class Player;
+	template<class T> class Enemy;
 // class prototype ]
 
 /*
@@ -81,13 +77,26 @@ class Spawn{
 
 		// spawn enemy
 		static Enemy<T> * enemy(
-				SDL_Surface *sprite,
-				T 			spawn_x_offset,
-				T			spawn_y_offset,
-				bool 		can_shoot
+				World<T>	*_world,
+				SDL_Surface *_sprite,
+				T			_min_speed,
+				T 			_max_speed,
+				T			_acceleration,
+				bool 		can_shoot,
+				T			_x_offset,
+				T			_y_offset
 		)
 		{
-			Enemy<T> *new_enemy = new Enemy<T>(sprite , 5, can_shoot, spawn_x_offset, spawn_y_offset);
+			Enemy<T> *new_enemy = new Enemy<T>(
+					_world,
+					_sprite,
+					_min_speed,
+					_max_speed,
+					_acceleration,
+					can_shoot,
+					_x_offset,
+					_y_offset
+			);
 			return new_enemy;
 		}
 
