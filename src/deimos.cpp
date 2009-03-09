@@ -61,10 +61,6 @@ int main(int argc, char* args[]){
 
 	// [ load font data
 		TTF_Font *font = NULL;
-		SDL_Surface *health_info_s = NULL, // _s stands for surface
-					*points_info_s = NULL,
-					*shield_info_s = NULL,
-					*stream_info_s = NULL;
 		font = TTF_OpenFont( "ttf/FreeSans.ttf", 14 );
 		SDL_Color font_color = {255,255,255};
 	// load font data ]
@@ -145,14 +141,14 @@ int main(int argc, char* args[]){
 
 			// [ debug
 				Spawn<float>::enemy(
-					world,
-					enemy_sprite,
-					10,
-					10,
-					0,
-					0,
-					SCREEN_WIDTH / 2,
-					SCREEN_HEIGHT / 2
+					world,				// world
+					enemy_sprite,		// sprite
+					10,					// min speed
+					10,					// max speed
+					0,					// accel
+					false,				// can_shoot
+					SCREEN_WIDTH / 2,	// x_offset
+					SCREEN_HEIGHT / 2	// y_offset
 				);
 
 				Spawn<float>::enemy(
@@ -161,7 +157,7 @@ int main(int argc, char* args[]){
 					10,
 					10,
 					0,
-					0,
+					false,
 					SCREEN_WIDTH / 2,
 					SCREEN_HEIGHT / 2 - 50
 				);
@@ -169,25 +165,24 @@ int main(int argc, char* args[]){
 
 	/***************************************/
 
-		std::stringstream health_info;
-		std::stringstream points_info;
-		std::stringstream shield_info;
-		std::stringstream stream_info;
+		std::stringstream points_info_sstream;
+		std::stringstream shield_info_sstream;
+		std::stringstream stream_info_sstream;
 		std::stringstream caption;
 
 		// [ Set up player information for drawing
-			health_info << "Health: " << player->get_health();
-			health_info_s = TTF_RenderText_Blended(font, health_info.str().c_str(), font_color);
+			std::stringstream health_info_sstream;
+			health_info_sstream << "Health: " << player->get_health();
+			Uint health_info_key = display_engine->add_text( health_info_sstream.str(), font, font_color, 5 , 5 );
+			points_info_sstream << "Points: " << player->get_points();
+			Uint points_info_key = display_engine->add_text( points_info_sstream.str(), font, font_color, 5 , 22 );
 
-			points_info << "Points: " << player->get_points();
-			points_info_s = TTF_RenderText_Blended(font, points_info.str().c_str(), font_color);
+			shield_info_sstream << "Shield: " << player->get_shield();
+			Uint shield_info_key = display_engine->add_text( shield_info_sstream.str(), font, font_color, 5 , 39 );
 
-			shield_info << "Shield: " << player->get_shield();
-			shield_info_s = TTF_RenderText_Blended(font, shield_info.str().c_str(), font_color);
-
-			stream_info << "Bullet Streams: " << player->get_streams();
-			if(player->get_streams() == 48){ stream_info << " (MAX)"; }
-			stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
+			stream_info_sstream << "Bullet Streams: " << player->get_streams();
+			if(player->get_streams() == 48){ stream_info_sstream << " (MAX)"; }
+			Uint stream_info_key = display_engine->add_text( stream_info_sstream.str(), font, font_color, 5 , 56 );
 		// Set up player info for drawing ]
 
 	/******************************************
@@ -231,28 +226,28 @@ int main(int argc, char* args[]){
 				if(event.type == SDL_KEYDOWN){
 					if(event.key.keysym.sym == SDLK_PAGEUP){
 
-						SDL_FreeSurface( stream_info_s );
+						// update status text
+						stream_info_sstream.clear(); stream_info_sstream.str("");
+						stream_info_sstream << "Bullet Streams: " << player->get_streams();
+						if(player->get_streams() == 48){ stream_info_sstream << " (MAX)"; }
+						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
-						//delete stream_info_s;
-						stream_info.clear(); stream_info.str("");
-						stream_info << "Bullet Streams: " << player->get_streams();
-						if(player->get_streams() == 48){ stream_info << " (MAX)"; }
-						stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
-
+						// update streams
 						player->update_streams(0);	// add streams`
 						break;
+
 					}
 					if(event.key.keysym.sym == SDLK_PAGEDOWN){
 
-						SDL_FreeSurface( stream_info_s );
+						// update status text
+						stream_info_sstream.clear(); stream_info_sstream.str("");
+						stream_info_sstream << "Bullet Streams: " << player->get_streams();
+						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
-						//delete stream_info_s;
-						stream_info.clear(); stream_info.str("");
-						stream_info << "Bullet Streams: " << player->get_streams();
-						stream_info_s = TTF_RenderText_Blended(font, stream_info.str().c_str(), font_color);
-
+						// update streams
 						player->update_streams(1);	// subtract streams
 						break;
+
 					}
 					if(event.key.keysym.sym == SDLK_m){
 						sound_engine->set_muted_status( sound_engine->get_muted_status()? false : true );
@@ -316,10 +311,10 @@ int main(int argc, char* args[]){
 					 // causing some lag in the first bullet.
 					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
 						 // if bullet is off screen erase it
-						if(world->get_bullets()->at(i)->get_x_offset() >= SCREEN_WIDTH
-							 || world->get_bullets()->at(i)->get_y_offset() >= SCREEN_HEIGHT
-							 //|| world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() <= 0
-							 //|| world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() <= 0
+						if(world->get_bullets()->at(i)->get_x_offset() > SCREEN_WIDTH
+							 || world->get_bullets()->at(i)->get_y_offset() > SCREEN_HEIGHT
+							 || world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() < 0
+							 || world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() < 0
 						)
 						{
 							delete world->get_bullets()->at(i);
@@ -338,10 +333,18 @@ int main(int argc, char* args[]){
 			// apply player sprite to screen ]
 
 			// [ apply player info to screen
-				SDL::apply_surface(5, 5, health_info_s, screen);
+				for( Uint i = 0; i < display_engine->get_text()->size(); i++ ){
+					SDL::apply_surface(
+							display_engine->get_text()->at(i)->x_offset,
+							display_engine->get_text()->at(i)->y_offset,
+							display_engine->get_text()->at(i)->surface,
+							screen
+					);
+				}
+				/*SDL::apply_surface(5, 5, health_info_s, screen);
 				SDL::apply_surface(5, 22, points_info_s, screen);
 				SDL::apply_surface(5, 39, shield_info_s, screen);
-				SDL::apply_surface(5, 56, stream_info_s, screen);
+				SDL::apply_surface(5, 56, stream_info_s, screen);*/
 
 			// apply info to screen]
 
@@ -359,7 +362,7 @@ int main(int argc, char* args[]){
 					frames = 0;
 				}
 				/*if( fps_update.get_ticks() > 1000 ){
-					caption.clear();
+					caption.clear();;
 					caption.str("");
 					caption << "Average Frames Per Second: " << frames / ( fps_measure.get_ticks() / 1000.f );
 					SDL_WM_SetCaption( caption.str().c_str(), NULL );
