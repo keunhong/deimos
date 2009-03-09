@@ -240,13 +240,14 @@ int main(int argc, char* args[]){
 					}
 					if(event.key.keysym.sym == SDLK_PAGEDOWN){
 
+						// update streams
+						player->update_streams(1);	// subtract streams
+
 						// update status text
 						stream_info_sstream.clear(); stream_info_sstream.str("");
 						stream_info_sstream << "Bullet Streams: " << player->get_streams();
 						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
-						// update streams
-						player->update_streams(1);	// subtract streams
 						break;
 
 					}
