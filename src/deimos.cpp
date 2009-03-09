@@ -226,14 +226,15 @@ int main(int argc, char* args[]){
 				if(event.type == SDL_KEYDOWN){
 					if(event.key.keysym.sym == SDLK_PAGEUP){
 
+						// update streams
+						player->update_streams(0);	// add streams`
+
 						// update status text
 						stream_info_sstream.clear(); stream_info_sstream.str("");
 						stream_info_sstream << "Bullet Streams: " << player->get_streams();
 						if(player->get_streams() == 36){ stream_info_sstream << " (MAX)"; }
 						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
-						// update streams
-						player->update_streams(0);	// add streams`
 						break;
 
 					}
