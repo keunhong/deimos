@@ -1,5 +1,5 @@
 /*
- * DisplayEngine.h
+ * TextEngine.h
  *
  *  Created on: Mar 9, 2009
  *      Author: K
@@ -20,14 +20,15 @@ struct Text{
 };
 
 template<class T>
-class DisplayEngine : public Engine<T>{
-	std::vector< Text<T>* >	*text;
+class TextEngine : public Engine<T>{
+	std::vector< Text<T>* >	*text; // vector for storing text
 
 	public:
-		DisplayEngine(){
+		TextEngine(){
 			text = new std::vector< Text<T>* >;
 		}
 
+		// add Text struct to the text vector
 		Uint add_text(std::string _text, TTF_Font *_font, SDL_Color _color, T _x_offset, T _y_offset){
 			Text<T> *new_text = new Text<T>;
 			new_text->key = text->size();
@@ -42,12 +43,14 @@ class DisplayEngine : public Engine<T>{
 
 			return new_text->key;
 		}
+		// update text using key
 		void update_text( Uint key, std::string _text ){
 			Text<T> *current_text = text->at(key);
 			current_text->text = _text;
 			SDL_FreeSurface( current_text->surface );
 			current_text->surface = TTF_RenderText_Blended( current_text->font, _text.c_str(), current_text->color );
 		}
+		// return Text struct
 		std::vector< Text<T>* >	* get_text() const{ return text; }
 
 

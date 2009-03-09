@@ -22,7 +22,7 @@
 	// [ class includes
 		#include "Timer.h"
 		#include "Engine.h"
-		#include "DisplayEngine.h"
+		#include "TextEngine.h"
 		#include "SoundEngine.h"
 		#include "World.h"
 		#include "Spawn.h"
@@ -113,7 +113,7 @@ int main(int argc, char* args[]){
 		// initialize engine ]
 
 		// [ initilize display engine
-			DisplayEngine<float>* display_engine = new DisplayEngine<float>();
+			TextEngine<float>* text_engine = new TextEngine<float>();
 		// initialize display engine ]
 
 		// [ initilize sound engine
@@ -178,16 +178,16 @@ int main(int argc, char* args[]){
 		// [ Set up player information for drawing
 			std::stringstream health_info_sstream;
 			health_info_sstream << "Health: " << player->get_health();
-			Uint health_info_key = display_engine->add_text( health_info_sstream.str(), font, font_color, 5 , 5 );
+			Uint health_info_key = text_engine->add_text( health_info_sstream.str(), font, font_color, 5 , 5 );
 			points_info_sstream << "Points: " << player->get_points();
-			Uint points_info_key = display_engine->add_text( points_info_sstream.str(), font, font_color, 5 , 22 );
+			Uint points_info_key = text_engine->add_text( points_info_sstream.str(), font, font_color, 5 , 22 );
 
 			shield_info_sstream << "Shield: " << player->get_shield();
-			Uint shield_info_key = display_engine->add_text( shield_info_sstream.str(), font, font_color, 5 , 39 );
+			Uint shield_info_key = text_engine->add_text( shield_info_sstream.str(), font, font_color, 5 , 39 );
 
 			stream_info_sstream << "Bullet Streams: " << player->get_streams();
 			if(player->get_streams() == 48){ stream_info_sstream << " (MAX)"; }
-			Uint stream_info_key = display_engine->add_text( stream_info_sstream.str(), font, font_color, 5 , 56 );
+			Uint stream_info_key = text_engine->add_text( stream_info_sstream.str(), font, font_color, 5 , 56 );
 		// Set up player info for drawing ]
 
 	/******************************************
@@ -238,7 +238,7 @@ int main(int argc, char* args[]){
 						stream_info_sstream.clear(); stream_info_sstream.str("");
 						stream_info_sstream << "Bullet Streams: " << player->get_streams();
 						if(player->get_streams() == 36){ stream_info_sstream << " (MAX)"; }
-						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
+						text_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
 						break;
 
@@ -251,7 +251,7 @@ int main(int argc, char* args[]){
 						// update status text
 						stream_info_sstream.clear(); stream_info_sstream.str("");
 						stream_info_sstream << "Bullet Streams: " << player->get_streams();
-						display_engine->update_text( stream_info_key, stream_info_sstream.str() );
+						text_engine->update_text( stream_info_key, stream_info_sstream.str() );
 
 						break;
 
@@ -304,7 +304,11 @@ int main(int argc, char* args[]){
 						for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
 							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
 
-								SDL::apply_surface(int(world->get_enemies()->at(j)->get_x_offset()),int(world->get_enemies()->at(j)->get_y_offset()),explosion_sprite,screen);
+								SDL::apply_surface(
+										int( world->get_enemies()->at(j)->get_x_offset() + ( enemy_sprite->w - explosion_sprite->w )  / 2 ),
+										int( world->get_enemies()->at(j)->get_y_offset() + ( enemy_sprite->h - explosion_sprite->h ) / 2 ),
+										explosion_sprite,screen
+								);
 
 								delete world->get_bullets()->at(i);
 								world->get_bullets()->erase(world->get_bullets()->begin() + i);
@@ -344,11 +348,11 @@ int main(int argc, char* args[]){
 			// apply player sprite to screen ]
 
 			// [ apply player info to screen
-				for( Uint i = 0; i < display_engine->get_text()->size(); i++ ){
+				for( Uint i = 0; i < text_engine->get_text()->size(); i++ ){
 					SDL::apply_surface(
-							display_engine->get_text()->at(i)->x_offset,
-							display_engine->get_text()->at(i)->y_offset,
-							display_engine->get_text()->at(i)->surface,
+							text_engine->get_text()->at(i)->x_offset,
+							text_engine->get_text()->at(i)->y_offset,
+							text_engine->get_text()->at(i)->surface,
 							screen
 					);
 				}
