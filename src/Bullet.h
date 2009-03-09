@@ -24,14 +24,14 @@ public:
 	Bullet(
 			World<T>		*_world,
 			const Entity<T> *_owner,
-			T 				_min_speed,
-			T 				_max_speed,
-			T 				_acceleration,
+			int 			_min_speed,
+			int 			_max_speed,
+			int 			_acceleration,
 			int				_power,
-			T				_x_offset,
-			T 				_y_offset,
+			int				_x_offset,
+			int 			_y_offset,
 			float			_angle,
-			SDL_Surface 	*_sprite
+			Sprite 			*_sprite
 	)
 	{
 		// [ these are in the parent object
@@ -56,8 +56,8 @@ public:
 	float get_angle() const{ return angle; }
 
 	void move(){
-		this->set_x_offset( this->get_x_offset() + this->get_max_speed() * cos( this->get_angle() ) );
-		this->set_y_offset( this->get_y_offset() + T(this->get_max_speed() * sin( this->get_angle() )) );
+		this->set_x_offset( int( this->get_x_offset() + this->get_max_speed() * cos( this->get_angle() ) ) );
+		this->set_y_offset( int( this->get_y_offset() + T(this->get_max_speed() * sin( this->get_angle() )) ) );
 	}
 };
 /********************************************/

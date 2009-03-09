@@ -24,21 +24,21 @@ class Enemy : public Entity<T>{
 
 public:
 	Enemy(
-			World<T>	*_world,
-			SDL_Surface *_sprite,
-			T			_min_speed,
-			T 			_max_speed,
-			T			_acceleration,
+			World<float>	*_world,
+			Sprite		*_sprite,
+			int			_min_speed,
+			int 			_max_speed,
+			int			_acceleration,
 			bool 		can_shoot,
-			T			_x_offset,
-			T			_y_offset
+			int			_x_offset,
+			int			_y_offset
 			)
 	{
 		// [ these are in the parent object
 			// ! this-> is needed to access the private parent object data items
 				this->set_world( _world );
-				this->set_x_offset( T(_x_offset) );
-				this->set_y_offset( T(_y_offset) );
+				this->set_x_offset( int(_x_offset) );
+				this->set_y_offset( int(_y_offset) );
 				this->set_min_speed( _min_speed );
 				this->set_max_speed( _max_speed );
 				this->set_acceleration( _acceleration );

@@ -27,7 +27,7 @@ class SDL{
 		/********************************************
 		*** Function for loading images
 		********************************************/
-		static SDL_Surface * load_image( char *filename ){
+		static SDL_Surface * load_image( std::string filename ){
 			// set pointer for original image
 			SDL_Surface *original_image = NULL;
 
@@ -35,7 +35,7 @@ class SDL{
 			SDL_Surface *optimized_image = NULL;
 
 			// load image
-			original_image = IMG_Load( filename );
+			original_image = IMG_Load( filename.c_str() );
 
 			// skip if image was not successfully loaded
 			if(original_image != NULL){
