@@ -22,8 +22,8 @@
 	// [ class includes
 		#include "Timer.h"
 		#include "Engine.h"
-		#include "Display.h"
-		#include "Sound.h"
+		#include "DisplayEngine.h"
+		#include "SoundEngine.h"
 		#include "World.h"
 		#include "Spawn.h"
 		#include "Entity.h"
