@@ -53,6 +53,9 @@ public:
 	}
 
 	bool check_collision(Entity<T> *other){
+		this->set_collision_box();
+		other->set_collision_box();
+
 		int this_north 	= this->get_collision_box()->y;
 		int this_south	= this->get_collision_box()->y + this->get_collision_box()->h;
 		int this_east	= this->get_collision_box()->x + this->get_collision_box()->w;
