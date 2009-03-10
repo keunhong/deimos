@@ -24,14 +24,14 @@ public:
 	Bullet(
 			World<T>		*_world,
 			const Entity<T> *_owner,
-			int 			_min_speed,
-			int 			_max_speed,
-			int 			_acceleration,
+			T	 			_min_speed,
+			T				_max_speed,
+			T 				_acceleration,
 			int				_power,
-			int				_x_offset,
-			int 			_y_offset,
+			T				_x_offset,
+			T	 			_y_offset,
 			float			_angle,
-			Sprite 			*_sprite
+			SDL_Surface		*_sprite
 	)
 	{
 		// [ these are in the parent object
@@ -42,7 +42,6 @@ public:
 			this->set_min_speed( _min_speed );
 			this->set_max_speed( _max_speed );
 			this->set_acceleration( _acceleration );
-			this->set_sprite( _sprite );
 			this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 

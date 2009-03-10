@@ -17,47 +17,31 @@
 template<class T>
 class Entity{
 	World<T> 	*world;
-	int 		x_offset;
-	int 		y_offset;
-	int 		min_speed;
-	int 		max_speed;
-	int 		acceleration;
-	Sprite 		*sprite;
+	T	 		x_offset;
+	T	 		y_offset;
+	T	 		min_speed;
+	T	 		max_speed;
+	T	 		acceleration;
+	SDL_Surface	*sprite;
 	SDL_Rect 	*collision_box;
 
 public:
 	World<T> * get_world() const{ return world; }
-	int get_x_offset() const{ return x_offset; }
-	int get_y_offset() const{ return y_offset; }
-	int get_min_speed() const{ return min_speed; }
-	int get_max_speed()  const{ return max_speed; }
-	int get_acceleration() const{ return acceleration; }
-	int get_sprite() const{ return sprite; }
-	Uint get_width() const{ return sprite->surface->w; }
-	Uint get_height() const{ return sprite->surface->h; }
+	T get_x_offset() const{ return x_offset; }
+	T get_y_offset() const{ return y_offset; }
+	T get_min_speed() const{ return min_speed; }
+	T get_max_speed()  const{ return max_speed; }
+	T get_acceleration() const{ return acceleration; }
+	Uint get_width() const{ return sprite->w; }
+	Uint get_height() const{ return sprite->h; }
 	SDL_Rect * get_collision_box() const{ return collision_box; }
 
 	void set_world(World<T> *_world){ world = _world; }
-	void set_x_offset(int _x_offset){ x_offset = _x_offset; }
-	void set_y_offset(int _y_offset){ y_offset = _y_offset; }
-	void set_min_speed(int _min_speed){ min_speed = _min_speed; }
-	void set_max_speed(int _max_speed){ max_speed = _max_speed; }
-	void set_acceleration(int _acceleration){ acceleration = _acceleration; }
-	void set_sprite( Sprite *_sprite ){ sprite = _sprite; }
-	void update_sprite( int _x_offset = -1, int _y_offset = -1, std::string _file = "" ){
-		if(_x_offset != -1){
-			sprite->x_offset = _x_offset;
-		}
-		if(_y_offset != -1){
-			sprite->y_offset = _y_offset;
-		}
-		if(_file != ""){
-			SDL_FreeSurface( sprite->surface );
-
-			sprite->file = _file;
-			sprite->surface = SDL::load_image(_file);
-		}
-	}
+	void set_x_offset(T _x_offset){ x_offset = _x_offset; }
+	void set_y_offset(T _y_offset){ y_offset = _y_offset; }
+	void set_min_speed(T _min_speed){ min_speed = _min_speed; }
+	void set_max_speed(T _max_speed){ max_speed = _max_speed; }
+	void set_acceleration(T _acceleration){ acceleration = _acceleration; }
 
 	void set_collision_box(){
 		collision_box = new SDL_Rect;

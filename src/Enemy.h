@@ -25,13 +25,13 @@ class Enemy : public Entity<T>{
 public:
 	Enemy(
 			World<float>	*_world,
-			Sprite		*_sprite,
-			int			_min_speed,
+			SDL_Surface		*_sprite,
+			int				_min_speed,
 			int 			_max_speed,
-			int			_acceleration,
-			bool 		can_shoot,
-			int			_x_offset,
-			int			_y_offset
+			int				_acceleration,
+			bool 			can_shoot,
+			int				_x_offset,
+			int				_y_offset
 			)
 	{
 		// [ these are in the parent object
@@ -42,7 +42,6 @@ public:
 				this->set_min_speed( _min_speed );
 				this->set_max_speed( _max_speed );
 				this->set_acceleration( _acceleration );
-				this->set_sprite( _sprite );
 				this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 

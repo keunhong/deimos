@@ -7,7 +7,7 @@
 		#include <vector>
 		#include <cmath>
 	// default includes ]
-
+//lol
 	// [ SDL includes (in the src directory)
 		#include "SDL/SDL.h"
 		#include "SDL/SDL_image.h"
@@ -130,7 +130,7 @@ int main(int argc, char* args[]){
 					sprite_engine->get_sprite(bullet_sprite_key),	// sprite_engine->get_sprite(bullet_sprite_key)
 					10,				// bullet_speed
 					10,				// bullet_power
-					300				// bullet_delay
+					200				// bullet_delay
 			);
 		// initialize player ]
 
@@ -282,7 +282,7 @@ int main(int argc, char* args[]){
 						}else{
 							SDL_WM_SetCaption( "Idle", NULL );
 						}
-						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), sprite_engine->get_sprite(enemy_sprite_key)->surface, screen );
+						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), sprite_engine->get_sprite(enemy_sprite_key), screen );
 					}
 				}
 			// show enemies ]
@@ -297,9 +297,9 @@ int main(int argc, char* args[]){
 							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
 
 								SDL::apply_surface(
-										int( world->get_enemies()->at(j)->get_x_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->surface->w - sprite_engine->get_sprite(explosion_sprite_key)->surface->w )  / 2 ),
-										int( world->get_enemies()->at(j)->get_y_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->surface->h - sprite_engine->get_sprite(explosion_sprite_key)->surface->h ) / 2 ),
-										sprite_engine->get_sprite(explosion_sprite_key)->surface
+										int( world->get_enemies()->at(j)->get_x_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->w - sprite_engine->get_sprite(explosion_sprite_key)->w )  / 2 ),
+										int( world->get_enemies()->at(j)->get_y_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->h - sprite_engine->get_sprite(explosion_sprite_key)->h ) / 2 ),
+										sprite_engine->get_sprite(explosion_sprite_key)
 										,screen
 								);
 
@@ -339,7 +339,7 @@ int main(int argc, char* args[]){
 					SDL::apply_surface(
 							int( world->get_bullets()->at(i)->get_x_offset() ),
 							int( world->get_bullets()->at(i)->get_y_offset() ),
-							sprite_engine->get_sprite(bullet_sprite_key)->surface,
+							sprite_engine->get_sprite(bullet_sprite_key),
 							screen );
 				}
 			// shoot existing bullets ]
@@ -349,7 +349,7 @@ int main(int argc, char* args[]){
 				SDL::apply_surface(
 						int(player->get_x_offset()),
 						int(player->get_y_offset()),
-						sprite_engine->get_sprite(player_sprite_key)->surface,
+						sprite_engine->get_sprite(player_sprite_key),
 						screen
 				);
 			// apply player sprite to screen ]
@@ -407,9 +407,9 @@ int main(int argc, char* args[]){
 	SDL_FreeSurface( bg2 );
 	SDL_FreeSurface( bg3 );
 
-	SDL_FreeSurface( sprite_engine->get_sprite(player_sprite_key)->surface );
-	SDL_FreeSurface( sprite_engine->get_sprite(bullet_sprite_key)->surface );
-	SDL_FreeSurface( sprite_engine->get_sprite(enemy_sprite_key)->surface );
+	SDL_FreeSurface( sprite_engine->get_sprite(player_sprite_key) );
+	SDL_FreeSurface( sprite_engine->get_sprite(bullet_sprite_key) );
+	SDL_FreeSurface( sprite_engine->get_sprite(enemy_sprite_key) );
 
 	// quit SDL
 	SDL_Quit();

@@ -24,26 +24,26 @@ class Player : public Entity<T>{
 	Uint 	points;
 
 	// bullet variables
-	int 	bullet_speed;
+	T	 	bullet_speed;
 	Uint 	bullet_last_shot;
 	int 	bullet_power;
 	Uint 	bullet_width;
 	Uint 	bullet_height;
 	Uint 	bullet_delay;
 	Uint 	bullet_streams;		// number of bullet streams, in addition to the main stream which has to always be there
-	Sprite 	*bullet_sprite;
+	SDL_Surface 	*bullet_sprite;
 
 public:
 	Player(
 			World<T>	*_world,
-			Sprite 		*_sprite,
-			int			_min_speed,
-			int 		_max_speed,
-			int			_acceleration,
-			int			_x_offset,
-			int			_y_offset,
-			Sprite 		*_bullet_sprite,
-			int 		_bullet_speed,
+			SDL_Surface	*_sprite,
+			T			_min_speed,
+			T	 		_max_speed,
+			T			_acceleration,
+			T			_x_offset,
+			T			_y_offset,
+			SDL_Surface	*_bullet_sprite,
+			T 			_bullet_speed,
 			int 		_bullet_power,
 			Uint		_bullet_delay
 	)
@@ -57,7 +57,6 @@ public:
 			this->set_min_speed( _min_speed );
 			this->set_max_speed( _max_speed );
 			this->set_acceleration( _acceleration );
-			this->set_sprite( _sprite );
 			this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 
@@ -99,7 +98,7 @@ public:
 				0,				// acceleration
 				10,				// power
 				this->get_x_offset() + this->get_width(),						// x_offset
-				this->get_y_offset() + this->get_height() / 2 - bullet_sprite->surface->h / 2,	// y_offset
+				this->get_y_offset() + this->get_height() / 2 - bullet_sprite->h / 2,	// y_offset
 				angle,			// angle
 				bullet_sprite	// bullet_sprite
 		);
@@ -141,8 +140,6 @@ public:
 		{
 			this->set_y_offset(0);
 		}
-
-		this->update_sprite( this->get_x_offset(), this->get_y_offset() );
 	}
 	void move_down(){
 		if( this->get_y_offset() <= int(SCREEN_HEIGHT - this->get_height() - this->get_max_speed() ) )
@@ -153,8 +150,6 @@ public:
 		else if( (this->get_y_offset() > int(SCREEN_HEIGHT - this->get_height() - this->get_max_speed())) && (this->get_y_offset() <= int(SCREEN_HEIGHT - this->get_height() )) ){
 			this->set_y_offset( this->get_y_offset() + int(SCREEN_HEIGHT - this->get_height() - this->get_y_offset()) );
 		}
-
-		this->update_sprite( this->get_x_offset(), this->get_y_offset() );
 	}
 	void move_left(){
 		if(this->get_x_offset() >= this->get_max_speed())
@@ -166,8 +161,6 @@ public:
 		{
 			this->set_x_offset( this->get_x_offset() - this->get_x_offset() );
 		}
-
-		this->update_sprite( this->get_x_offset(), this->get_y_offset() );
 	}
 	void move_right(){
 		if( this->get_x_offset() <= int(SCREEN_WIDTH - this->get_width() - this->get_max_speed()) )
@@ -181,8 +174,6 @@ public:
 		{
 			this->set_x_offset( this->get_x_offset() + (SCREEN_WIDTH - this->get_width() - this->get_x_offset()) );
 		}
-
-		this->update_sprite( this->get_x_offset(), this->get_y_offset() );
 	}
 };
 /********************************************/

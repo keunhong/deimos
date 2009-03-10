@@ -28,14 +28,14 @@ class Spawn{
 		static Bullet<T> * bullet(
 				World<T>	*_world,
 				const Entity<T> *_owner,
-				int 				_min_speed,
-				int				_max_speed,
-				int				_acceleration,
-				int 			_power,
-				int				_x_offset,
-				int				_y_offset,
+				T 				_min_speed,
+				T				_max_speed,
+				T				_acceleration,
+				int	 			_power,
+				T				_x_offset,
+				T				_y_offset,
 				float 			_angle,
-				Sprite			*_sprite
+				SDL_Surface		*_sprite
 		)
 		{
 			//T _x_offset, T _y_offset, T _speed, T _acceleration, T _power, float _angle, SDL_Surface *_sprite
@@ -62,14 +62,14 @@ class Spawn{
 		static Player<T> * player
 		(
 				World<T>	*_world,
-				Sprite 		*_sprite,
-				int			_min_speed,
-				int 			_max_speed,
-				int			_acceleration,
-				int 			_x_offset,
-				int			_y_offset,
-				Sprite 		*_bullet_sprite,
-				int			_bullet_speed,
+				SDL_Surface	*_sprite,
+				T			_min_speed,
+				T 			_max_speed,
+				T			_acceleration,
+				T 			_x_offset,
+				T			_y_offset,
+				SDL_Surface *_bullet_sprite,
+				T			_bullet_speed,
 				int			_bullet_power,
 				Uint 		_bullet_delay
 		)
@@ -80,14 +80,14 @@ class Spawn{
 
 		// spawn enemy
 		static Enemy<T> * enemy(
-				World<T>	*_world,
-				Sprite 		*_sprite,
-				int			_min_speed,
+				World<T>		*_world,
+				SDL_Surface		*_sprite,
+				int				_min_speed,
 				int 			_max_speed,
-				int			_acceleration,
-				bool 		can_shoot,
-				int			_x_offset,
-				int			_y_offset
+				int				_acceleration,
+				bool 			can_shoot,
+				int				_x_offset,
+				int				_y_offset
 		)
 		{
 			Enemy<T> *new_enemy = new Enemy<T>(
