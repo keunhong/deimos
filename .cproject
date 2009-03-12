@@ -43,9 +43,8 @@
 <listOptionValue builtIn="false" value="mingw32"/>
 <listOptionValue builtIn="false" value="SDLmain"/>
 <listOptionValue builtIn="false" value="SDL_image"/>
-<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="SDL_ttf"/>
-<listOptionValue builtIn="false" value="SDL"/>
+<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="SDL"/>
 </option>
 <option id="gnu.cpp.link.option.paths.1095565245" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
@@ -493,7 +492,7 @@
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactName="Deimos" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.release.478604995" name="Release" parent="cdt.managedbuild.config.gnu.mingw.exe.release">
+<configuration artifactName="shooting_game" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.gnu.mingw.exe.release.478604995" name="Release" parent="cdt.managedbuild.config.gnu.mingw.exe.release">
 <folderInfo id="cdt.managedbuild.config.gnu.mingw.exe.release.478604995." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.mingw.exe.release.1743287209" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.exe.release">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.mingw.exe.release.942591776" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.mingw.exe.release"/>
@@ -518,14 +517,13 @@
 <tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.258793291" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.35091191" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release">
 <option id="gnu.cpp.link.option.paths.267558596" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Deimos/src/lib}&quot;"/>
+<listOptionValue builtIn="false" value="&quot;${workspace_loc:/shooting_game/src/lib}&quot;"/>
 </option>
 <option id="gnu.cpp.link.option.libs.766667087" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="mingw32"/>
 <listOptionValue builtIn="false" value="SDLmain"/>
 <listOptionValue builtIn="false" value="SDL_image"/>
 <listOptionValue builtIn="false" value="SDL_ttf"/>
-<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="SDL"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1148896455" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">

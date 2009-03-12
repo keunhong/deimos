@@ -7,7 +7,7 @@
 		#include <vector>
 		#include <cmath>
 	// default includes ]
-//lol
+
 	// [ SDL includes (in the src directory)
 		#include "SDL/SDL.h"
 		#include "SDL/SDL_image.h"
@@ -19,15 +19,10 @@
 		#include "common.h"
 	// definition includes ]
 
-	// [ function includes
-		#include "SDLClass.h"
-	// function includes ]
-
 	// [ class includes
 		#include "Timer.h"
 		#include "Engine.h"
 		#include "TextEngine.h"
-		#include "SpriteEngine.h"
 		#include "SoundEngine.h"
 		#include "Effects.h"
 		#include "World.h"
@@ -38,6 +33,9 @@
 		#include "Enemy.h"
 	// class includes ]
 
+	// [ function includes
+		#include "SDLClass.h"
+	// function includes ]
 /***************************************/
 
 
@@ -88,29 +86,43 @@ int main(int argc, char* args[]){
 			int bg3_y_offset = SCREEN_HEIGHT - bg3->h;
 		// load background images ]
 
+		// [ load player sprite
+			SDL_Surface *player_sprite = NULL;
+			player_sprite = SDL::load_image("images/player.png");
+		// load player sprite ]
+
+		// [ load bullet sprite
+			SDL_Surface *bullet_sprite = NULL;
+			bullet_sprite = SDL::load_image("images/bullet.png");
+		// load bullet sprite ]
+
+		// [ load enemy sprite
+			SDL_Surface *enemy_sprite = NULL;
+			enemy_sprite = SDL::load_image("images/enemy.png");
+		// load enemy sprite ]
+
+		// [ load explosion sprite
+			SDL_Surface *explosion_sprite = NULL;
+			explosion_sprite = SDL::load_image("images/explosion.png");
+		// load explosion sprite ]
+
 	/****************************************
 	*** INITIALIZE STUFF
 	****************************************/
 		// [ initialize engine
-			Engine* engine = new Engine;
+			//Engine<float>* engine = new Engine<float>();
 		// initialize engine ]
 
 		// [ initilize display engine
-			TextEngine* text_engine = new TextEngine;
+			TextEngine<float>* text_engine = new TextEngine<float>();
 		// initialize display engine ]
 
-		// [ initialize sprite engine
-			SpriteEngine* sprite_engine = new SpriteEngine;
-			Uint player_sprite_key = sprite_engine->add_sprite("images/player.png");
-			Uint bullet_sprite_key = sprite_engine->add_sprite("images/bullet.png");
-			Uint enemy_sprite_key = sprite_engine->add_sprite("images/enemy.png");
-			Uint explosion_sprite_key = sprite_engine->add_sprite("images/explosion.png");
-		// initialize sprite engine ]
 
 		//Explode *explode = new Explode();
 
 		// [ initilize sound engine
-			SoundEngine* sound_engine = new SoundEngine("sounds/bg_music1.mp3","sounds/laser.wav");
+			SoundEngine<float>* sound_engine = new SoundEngine<float>("sounds/bg_music1.mp3","sounds/laser.wav");
+
 			sound_engine->play_bg_music();
 		// initialize sound engine ]
 
@@ -121,16 +133,16 @@ int main(int argc, char* args[]){
 		// [ initialize player
 			Player<float>* player = Spawn<float>::player(
 					world,
-					sprite_engine->get_sprite(player_sprite_key),  // sprite
+					player_sprite,  // sprite
 					3,				// min_speed
 					7,				// max_speed
 					1,				// acceleration
 					100,			// x_offset
 					100,			// y_offset
-					sprite_engine->get_sprite(bullet_sprite_key),	// sprite_engine->get_sprite(bullet_sprite_key)
+					bullet_sprite,	// bullet_sprite
 					10,				// bullet_speed
 					10,				// bullet_power
-					200				// bullet_delay
+					300				// bullet_delay
 			);
 		// initialize player ]
 
@@ -139,7 +151,7 @@ int main(int argc, char* args[]){
 			// [ debug
 				Spawn<float>::enemy(
 					world,				// world
-					sprite_engine->get_sprite(enemy_sprite_key),		// sprite
+					enemy_sprite,		// sprite
 					10,					// min speed
 					10,					// max speed
 					0,					// accel
@@ -150,7 +162,7 @@ int main(int argc, char* args[]){
 
 				Spawn<float>::enemy(
 					world,
-					sprite_engine->get_sprite(enemy_sprite_key),
+					enemy_sprite,
 					10,
 					10,
 					0,
@@ -282,7 +294,7 @@ int main(int argc, char* args[]){
 						}else{
 							SDL_WM_SetCaption( "Idle", NULL );
 						}
-						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), sprite_engine->get_sprite(enemy_sprite_key), screen );
+						SDL::apply_surface( int( world->get_enemies()->at(i)->get_x_offset() ), int( world->get_enemies()->at(i)->get_y_offset() ), enemy_sprite, screen );
 					}
 				}
 			// show enemies ]
@@ -297,10 +309,9 @@ int main(int argc, char* args[]){
 							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
 
 								SDL::apply_surface(
-										int( world->get_enemies()->at(j)->get_x_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->w - sprite_engine->get_sprite(explosion_sprite_key)->w )  / 2 ),
-										int( world->get_enemies()->at(j)->get_y_offset() + ( sprite_engine->get_sprite(enemy_sprite_key)->h - sprite_engine->get_sprite(explosion_sprite_key)->h ) / 2 ),
-										sprite_engine->get_sprite(explosion_sprite_key)
-										,screen
+										int( world->get_enemies()->at(j)->get_x_offset() + ( enemy_sprite->w - explosion_sprite->w )  / 2 ),
+										int( world->get_enemies()->at(j)->get_y_offset() + ( enemy_sprite->h - explosion_sprite->h ) / 2 ),
+										explosion_sprite,screen
 								);
 
 
@@ -323,8 +334,8 @@ int main(int argc, char* args[]){
 					 // causing some lag in the first bullet.
 					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
 						 // if bullet is off screen erase it
-						if(world->get_bullets()->at(i)->get_x_offset() > int( SCREEN_WIDTH )
-							 || world->get_bullets()->at(i)->get_y_offset() > int( SCREEN_HEIGHT )
+						if(world->get_bullets()->at(i)->get_x_offset() > SCREEN_WIDTH
+							 || world->get_bullets()->at(i)->get_y_offset() > SCREEN_HEIGHT
 							 || world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() < 0
 							 || world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() < 0
 						)
@@ -336,22 +347,13 @@ int main(int argc, char* args[]){
 				}
 			// draw the bullets
 				for(Uint i = 0; i < world->get_bullets()->size(); i++){
-					SDL::apply_surface(
-							int( world->get_bullets()->at(i)->get_x_offset() ),
-							int( world->get_bullets()->at(i)->get_y_offset() ),
-							sprite_engine->get_sprite(bullet_sprite_key),
-							screen );
+					SDL::apply_surface( int( world->get_bullets()->at(i)->get_x_offset() ), int( world->get_bullets()->at(i)->get_y_offset() ), bullet_sprite, screen );
 				}
 			// shoot existing bullets ]
 
 
 			// [ apply player sprite to screen
-				SDL::apply_surface(
-						int(player->get_x_offset()),
-						int(player->get_y_offset()),
-						sprite_engine->get_sprite(player_sprite_key),
-						screen
-				);
+				SDL::apply_surface( int(player->get_x_offset()), int(player->get_y_offset()), player_sprite, screen );
 			// apply player sprite to screen ]
 
 			// [ apply player info to screen
@@ -407,9 +409,9 @@ int main(int argc, char* args[]){
 	SDL_FreeSurface( bg2 );
 	SDL_FreeSurface( bg3 );
 
-	SDL_FreeSurface( sprite_engine->get_sprite(player_sprite_key) );
-	SDL_FreeSurface( sprite_engine->get_sprite(bullet_sprite_key) );
-	SDL_FreeSurface( sprite_engine->get_sprite(enemy_sprite_key) );
+	SDL_FreeSurface( player_sprite );
+	SDL_FreeSurface( bullet_sprite );
+	SDL_FreeSurface( enemy_sprite );
 
 	// quit SDL
 	SDL_Quit();

@@ -31,7 +31,7 @@ class Spawn{
 				T 				_min_speed,
 				T				_max_speed,
 				T				_acceleration,
-				int	 			_power,
+				int 			_power,
 				T				_x_offset,
 				T				_y_offset,
 				float 			_angle,
@@ -62,7 +62,7 @@ class Spawn{
 		static Player<T> * player
 		(
 				World<T>	*_world,
-				SDL_Surface	*_sprite,
+				SDL_Surface *_sprite,
 				T			_min_speed,
 				T 			_max_speed,
 				T			_acceleration,
@@ -80,14 +80,14 @@ class Spawn{
 
 		// spawn enemy
 		static Enemy<T> * enemy(
-				World<T>		*_world,
-				SDL_Surface		*_sprite,
-				int				_min_speed,
-				int 			_max_speed,
-				int				_acceleration,
-				bool 			can_shoot,
-				int				_x_offset,
-				int				_y_offset
+				World<T>	*_world,
+				SDL_Surface *_sprite,
+				T			_min_speed,
+				T 			_max_speed,
+				T			_acceleration,
+				bool 		can_shoot,
+				T			_x_offset,
+				T			_y_offset
 		)
 		{
 			Enemy<T> *new_enemy = new Enemy<T>(

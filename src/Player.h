@@ -19,30 +19,30 @@
  */
 template<class T>
 class Player : public Entity<T>{
-	Uint 	shield;
-	Uint 	health;
-	Uint 	points;
+	Uint shield;
+	Uint health;
+	Uint points;
 
 	// bullet variables
-	T	 	bullet_speed;
-	Uint 	bullet_last_shot;
-	int 	bullet_power;
-	Uint 	bullet_width;
-	Uint 	bullet_height;
-	Uint 	bullet_delay;
-	Uint 	bullet_streams;		// number of bullet streams, in addition to the main stream which has to always be there
-	SDL_Surface 	*bullet_sprite;
+	T bullet_speed;
+	Uint bullet_last_shot;
+	int bullet_power;
+	Uint bullet_width;
+	Uint bullet_height;
+	Uint bullet_delay;
+	Uint bullet_streams;		// number of bullet streams, in addition to the main stream which has to always be there
+	SDL_Surface *bullet_sprite;
 
 public:
 	Player(
 			World<T>	*_world,
-			SDL_Surface	*_sprite,
+			SDL_Surface *_sprite,
 			T			_min_speed,
-			T	 		_max_speed,
+			T 			_max_speed,
 			T			_acceleration,
 			T			_x_offset,
 			T			_y_offset,
-			SDL_Surface	*_bullet_sprite,
+			SDL_Surface *_bullet_sprite,
 			T 			_bullet_speed,
 			int 		_bullet_power,
 			Uint		_bullet_delay
@@ -52,11 +52,12 @@ public:
 		// [ these are in the parent object
 			// ! this-> is needed to access the parent object data items
 			this->set_world( _world );
-			this->set_x_offset( int(_x_offset) );
-			this->set_y_offset( int(_y_offset) );
+			this->set_x_offset( T(_x_offset) );
+			this->set_y_offset( T(_y_offset) );
 			this->set_min_speed( _min_speed );
 			this->set_max_speed( _max_speed );
 			this->set_acceleration( _acceleration );
+			this->set_sprite( _sprite );
 			this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 
@@ -131,47 +132,26 @@ public:
 	}
 
 	void move_up(){
-		if( this->get_y_offset() >= this->get_max_speed() )
-		{
-			this->set_y_offset(this->get_y_offset() - this->get_max_speed() );
-		}
+		if( this->get_y_offset() >= this->get_max_speed() ){ this->set_y_offset(this->get_y_offset() - this->get_max_speed() ); }
 		// handle the difference if it's less than then speed
-		else if( this->get_y_offset() < this->get_max_speed() && this->get_y_offset() >= 0 )
-		{
-			this->set_y_offset(0);
-		}
+		else if( this->get_y_offset() < this->get_max_speed() && this->get_y_offset() >= 0 ){ this->set_y_offset(0); }
 	}
 	void move_down(){
-		if( this->get_y_offset() <= int(SCREEN_HEIGHT - this->get_height() - this->get_max_speed() ) )
-		{
-			this->set_y_offset( this->get_y_offset() + this->get_max_speed());
-		}
+		if( this->get_y_offset() <= (SCREEN_HEIGHT - this->get_height() - this->get_max_speed() ) ){ this->set_y_offset( this->get_y_offset() + this->get_max_speed()) ; }
 		// handle the difference if it's less than then speed
-		else if( (this->get_y_offset() > int(SCREEN_HEIGHT - this->get_height() - this->get_max_speed())) && (this->get_y_offset() <= int(SCREEN_HEIGHT - this->get_height() )) ){
-			this->set_y_offset( this->get_y_offset() + int(SCREEN_HEIGHT - this->get_height() - this->get_y_offset()) );
+		else if( (this->get_y_offset() > (SCREEN_HEIGHT - this->get_height() - this->get_max_speed())) && (this->get_y_offset() <= (SCREEN_HEIGHT - this->get_height() )) ){
+			this->set_y_offset( this->get_y_offset() + (SCREEN_HEIGHT - this->get_height() - this->get_y_offset()) );
 		}
 	}
 	void move_left(){
-		if(this->get_x_offset() >= this->get_max_speed())
-		{
-			this->set_x_offset( this->get_x_offset() - this->get_max_speed() );
-		}
+		if(this->get_x_offset() >= this->get_max_speed()){ this->set_x_offset( this->get_x_offset() - this->get_max_speed() ); }
 		// handle the difference if it's less than then speed
-		else if(this->get_x_offset() < this->get_max_speed() && this->get_x_offset() >= 0)
-		{
-			this->set_x_offset( this->get_x_offset() - this->get_x_offset() );
-		}
+		else if(this->get_x_offset() < this->get_max_speed() && this->get_x_offset() >= 0){ this->set_x_offset( this->get_x_offset() - this->get_x_offset() ); }
 	}
 	void move_right(){
-		if( this->get_x_offset() <= int(SCREEN_WIDTH - this->get_width() - this->get_max_speed()) )
-		{
-			this->set_x_offset( this->get_x_offset() + this->get_max_speed() );
-		}
+		if( this->get_x_offset() <= (SCREEN_WIDTH - this->get_width() - this->get_max_speed()) ){ this->set_x_offset( this->get_x_offset() + this->get_max_speed() ); }
 		// handle the difference if it's less than then speed
-		else if( (this->get_x_offset() > int(SCREEN_WIDTH - this->get_width() - this->get_max_speed()))
-				&& (this->get_x_offset() <= int(SCREEN_WIDTH - this->get_width() ))
-		)
-		{
+		else if( (this->get_x_offset() > (SCREEN_WIDTH - this->get_width() - this->get_max_speed())) && (this->get_x_offset() <= (SCREEN_WIDTH - this->get_width() )) ){
 			this->set_x_offset( this->get_x_offset() + (SCREEN_WIDTH - this->get_width() - this->get_x_offset()) );
 		}
 	}

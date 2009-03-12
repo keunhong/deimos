@@ -8,6 +8,7 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
+template<class T>
 class Engine{
 
 

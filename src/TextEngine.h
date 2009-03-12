@@ -8,27 +8,29 @@
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 
+template<class T>
 struct Text{
 	Uint key;
 	std::string text;
 	TTF_Font 	*font;
 	SDL_Color	color;
-	int			x_offset;
-	int 			y_offset;
+	T 			x_offset;
+	T 			y_offset;
 	SDL_Surface *surface;
 };
 
-class TextEngine : public Engine{
-	std::vector< Text* >	*text; // vector for storing text
+template<class T>
+class TextEngine : public Engine<T>{
+	std::vector< Text<T>* >	*text; // vector for storing text
 
 	public:
 		TextEngine(){
-			text = new std::vector< Text* >;
+			text = new std::vector< Text<T>* >;
 		}
 
 		// add Text struct to the text vector
-		Uint add_text(std::string _text, TTF_Font *_font, SDL_Color _color, int _x_offset, int _y_offset){
-			Text *new_text = new Text;
+		Uint add_text(std::string _text, TTF_Font *_font, SDL_Color _color, T _x_offset, T _y_offset){
+			Text<T> *new_text = new Text<T>;
 			new_text->key = text->size();
 			new_text->text = _text;
 			new_text->font = _font;
@@ -43,13 +45,13 @@ class TextEngine : public Engine{
 		}
 		// update text using key
 		void update_text( Uint key, std::string _text ){
-			Text *current_text = text->at(key);
+			Text<T> *current_text = text->at(key);
 			current_text->text = _text;
 			SDL_FreeSurface( current_text->surface );
 			current_text->surface = TTF_RenderText_Blended( current_text->font, _text.c_str(), current_text->color );
 		}
 		// return Text struct
-		std::vector< Text* > * get_text() const{ return text; }
+		std::vector< Text<T>* >	* get_text() const{ return text; }
 
 
 };

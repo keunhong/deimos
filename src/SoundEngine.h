@@ -8,7 +8,8 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
-class SoundEngine : public Engine{
+template<class T>
+class SoundEngine : public Engine<T>{
 	bool muted_status;
 
 	Mix_Music *bg_music;
