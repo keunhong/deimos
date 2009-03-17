@@ -152,8 +152,8 @@ int main(int argc, char* args[]){
 				Spawn<float>::enemy(
 					world,				// world
 					enemy_sprite,		// sprite
-					10,					// min speed
-					10,					// max speed
+					1,					// min speed
+					1,					// max speed
 					0,					// accel
 					false,				// can_shoot
 					SCREEN_WIDTH / 2,	// x_offset
@@ -163,8 +163,8 @@ int main(int argc, char* args[]){
 				Spawn<float>::enemy(
 					world,
 					enemy_sprite,
-					10,
-					10,
+					1,
+					1,
 					0,
 					false,
 					SCREEN_WIDTH / 2,
@@ -284,6 +284,10 @@ int main(int argc, char* args[]){
 					}
 				}
 			// handle key strokes ]
+
+				if (world->get_enemies()->size() > 0) {
+					world->get_enemies()->at(0)->move_left();
+				}
 
 
 			// [ show enemies

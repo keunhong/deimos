@@ -48,6 +48,8 @@ public:
 
 		points = 0;
 	}
+
+
 };
 
 #endif /* ENEMY_H_ */

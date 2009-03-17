@@ -71,6 +71,12 @@ public:
 				this_east <= other_west ||
 				this_west >= other_east )? false : true ;
 	}
+
+	void move_left(){
+		if(this->get_x_offset() >= this->get_max_speed()){ this->set_x_offset( this->get_x_offset() - this->get_max_speed() ); }
+		// handle the difference if it's less than then speed
+		else if(this->get_x_offset() < this->get_max_speed() && this->get_x_offset() >= 0){ this->set_x_offset( this->get_x_offset() - this->get_x_offset() ); }
+	}
 };
 
 #endif /* ENTITY_H_ */

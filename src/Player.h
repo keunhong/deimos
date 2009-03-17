@@ -143,11 +143,12 @@ public:
 			this->set_y_offset( this->get_y_offset() + (SCREEN_HEIGHT - this->get_height() - this->get_y_offset()) );
 		}
 	}
+	/*
 	void move_left(){
 		if(this->get_x_offset() >= this->get_max_speed()){ this->set_x_offset( this->get_x_offset() - this->get_max_speed() ); }
 		// handle the difference if it's less than then speed
 		else if(this->get_x_offset() < this->get_max_speed() && this->get_x_offset() >= 0){ this->set_x_offset( this->get_x_offset() - this->get_x_offset() ); }
-	}
+	}*/
 	void move_right(){
 		if( this->get_x_offset() <= (SCREEN_WIDTH - this->get_width() - this->get_max_speed()) ){ this->set_x_offset( this->get_x_offset() + this->get_max_speed() ); }
 		// handle the difference if it's less than then speed
