@@ -183,6 +183,7 @@ int main(int argc, char* args[]){
 			std::stringstream health_info_sstream;
 			health_info_sstream << "Health: " << player->get_health();
 			Uint health_info_key = text_engine->add_text( health_info_sstream.str(), font, font_color, 5 , 5 );
+
 			points_info_sstream << "Points: " << player->get_points();
 			Uint points_info_key = text_engine->add_text( points_info_sstream.str(), font, font_color, 5 , 22 );
 
@@ -294,7 +295,25 @@ int main(int argc, char* args[]){
 				if(world->get_enemies()->empty() == false){
 					for(Uint i = 0; i < world->get_enemies()->size(); i++){
 						if(world->get_enemies()->at(i)->check_collision(player) == true){
-							SDL_WM_SetCaption( "Player and Enemy Collision!", NULL );
+							//SDL_WM_SetCaption( "Player and Enemy Collision!", NULL );
+							SDL::apply_surface(
+										int( world->get_enemies()->at(i)->get_x_offset() + ( enemy_sprite->w - explosion_sprite->w )  / 2 ),
+										int( world->get_enemies()->at(i)->get_y_offset() + ( enemy_sprite->h - explosion_sprite->h ) / 2 ),
+										explosion_sprite,screen
+								);
+
+							world->get_enemies()->at(i)->check_collision(player) == false;
+							delete world->get_enemies()->at(i);
+							world->get_enemies()->erase(world->get_enemies()->begin() + i);
+							player->set_health(-10);
+
+							// update status text
+							health_info_sstream.clear(); health_info_sstream.str("");
+							health_info_sstream << "Health: " << player->get_health();
+							text_engine->update_text( health_info_key, health_info_sstream.str() );
+
+							break;
+
 						}else{
 							SDL_WM_SetCaption( "Idle", NULL );
 						}
@@ -312,15 +331,18 @@ int main(int argc, char* args[]){
 						for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
 							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
 
+								player->set_points(10);
+
+								// update status text
+								points_info_sstream.clear(); points_info_sstream.str("");
+								points_info_sstream << "Points: " << player->get_points();
+								text_engine->update_text( points_info_key, points_info_sstream.str() );
+
 								SDL::apply_surface(
 										int( world->get_enemies()->at(j)->get_x_offset() + ( enemy_sprite->w - explosion_sprite->w )  / 2 ),
 										int( world->get_enemies()->at(j)->get_y_offset() + ( enemy_sprite->h - explosion_sprite->h ) / 2 ),
 										explosion_sprite,screen
 								);
-
-
-
-								//explode->explode(float(world->get_enemies()->at(j)->get_x_offset()),float(world->get_enemies()->at(j)->get_y_offset()));
 
 
 								delete world->get_bullets()->at(i);

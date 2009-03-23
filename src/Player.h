@@ -61,8 +61,6 @@ public:
 			this->set_collision_box(); // MUST come after sprite is defined or game will crash
 		// these are in the parent object ]
 
-		points = 0;
-
 		bullet_power 	= _bullet_power;
 		bullet_speed 	= _bullet_speed;
 		bullet_delay 	= _bullet_delay;
@@ -116,6 +114,14 @@ public:
 		if(action == 1 && bullet_streams > 0){
 			bullet_streams -=2;			// subtract 2
 		}
+	}
+
+	void set_health(int _health){
+		health = _health + health;
+	}
+
+	void set_points(int _points){
+		points = _points + points;
 	}
 
 	void shoot(){

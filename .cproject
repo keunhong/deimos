@@ -42,9 +42,9 @@
 <option id="gnu.cpp.link.option.libs.389184506" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="mingw32"/>
 <listOptionValue builtIn="false" value="SDLmain"/>
+<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="SDL_image"/>
 <listOptionValue builtIn="false" value="SDL_ttf"/>
-<listOptionValue builtIn="false" value="SDL_mixer"/>
 <listOptionValue builtIn="false" value="SDL"/>
 </option>
 <option id="gnu.cpp.link.option.paths.1095565245" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
@@ -62,6 +62,11 @@
 </sourceEntries>
 </configuration>
 </storageModule>
+
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -144,7 +149,7 @@
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
-<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.release.478604995;cdt.managedbuild.config.gnu.mingw.exe.release.478604995.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.828342368;cdt.managedbuild.tool.gnu.c.compiler.input.488918033">
+<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587;cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.381805660;cdt.managedbuild.tool.gnu.c.compiler.input.2058356780">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
 <buildOutputProvider>
@@ -393,7 +398,7 @@
 </scannerInfoProvider>
 </profile>
 </scannerConfigBuildInfo>
-<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587;cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.381805660;cdt.managedbuild.tool.gnu.c.compiler.input.2058356780">
+<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.release.478604995;cdt.managedbuild.config.gnu.mingw.exe.release.478604995.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.828342368;cdt.managedbuild.tool.gnu.c.compiler.input.488918033">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
 <buildOutputProvider>
@@ -477,9 +482,6 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.gnu.mingw.exe.release.478604995">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.gnu.mingw.exe.release.478604995" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -538,6 +540,11 @@
 </sourceEntries>
 </configuration>
 </storageModule>
+
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -620,7 +627,7 @@
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
-<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.release.478604995;cdt.managedbuild.config.gnu.mingw.exe.release.478604995.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.828342368;cdt.managedbuild.tool.gnu.c.compiler.input.488918033">
+<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587;cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.381805660;cdt.managedbuild.tool.gnu.c.compiler.input.2058356780">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
 <buildOutputProvider>
@@ -869,7 +876,7 @@
 </scannerInfoProvider>
 </profile>
 </scannerConfigBuildInfo>
-<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587;cdt.managedbuild.config.gnu.mingw.exe.debug.1183906587.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.debug.381805660;cdt.managedbuild.tool.gnu.c.compiler.input.2058356780">
+<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.exe.release.478604995;cdt.managedbuild.config.gnu.mingw.exe.release.478604995.;cdt.managedbuild.tool.gnu.c.compiler.mingw.exe.release.828342368;cdt.managedbuild.tool.gnu.c.compiler.input.488918033">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
 <buildOutputProvider>
@@ -953,12 +960,9 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
-<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<project id="shooting_game.cdt.managedbuild.target.gnu.mingw.exe.1700728366" name="Executable" projectType="cdt.managedbuild.target.gnu.mingw.exe"/>
+<project id="deimos_shooter.cdt.managedbuild.target.gnu.mingw.exe.133523300" name="Executable" projectType="cdt.managedbuild.target.gnu.mingw.exe"/>
 </storageModule>
 </cproject>
