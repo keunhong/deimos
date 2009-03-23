@@ -26,6 +26,13 @@ class Entity{
 	SDL_Rect *collision_box;
 
 public:
+
+	Entity(){
+		world = NULL;
+		sprite = NULL;
+		collision_box = NULL;
+	}
+
 	World<T> * get_world() const{ return world; }
 	T get_x_offset() const{ return x_offset; }
 	T get_y_offset() const{ return y_offset; }
@@ -72,10 +79,11 @@ public:
 				this_west >= other_east )? false : true ;
 	}
 
-	void move_left(){
-		if(this->get_x_offset() >= this->get_max_speed()){ this->set_x_offset( this->get_x_offset() - this->get_max_speed() ); }
-		// handle the difference if it's less than then speed
-		else if(this->get_x_offset() < this->get_max_speed() && this->get_x_offset() >= 0){ this->set_x_offset( this->get_x_offset() - this->get_x_offset() ); }
+	bool is_offscreen(){
+		return ( get_x_offset() > SCREEN_WIDTH ||
+				 get_y_offset() > SCREEN_HEIGHT ||
+				 get_x_offset() + get_width() < 0 ||
+				 get_y_offset() + get_height() < 0 );
 	}
 };
 

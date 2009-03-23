@@ -152,8 +152,8 @@ int main(int argc, char* args[]){
 				Spawn<float>::enemy(
 					world,				// world
 					enemy_sprite,		// sprite
-					1,					// min speed
-					1,					// max speed
+					5,					// min speed
+					5,					// max speed
 					0,					// accel
 					false,				// can_shoot
 					SCREEN_WIDTH / 2,	// x_offset
@@ -194,6 +194,8 @@ int main(int argc, char* args[]){
 			if(player->get_streams() == 48){ stream_info_sstream << " (MAX)"; }
 			Uint stream_info_key = text_engine->add_text( stream_info_sstream.str(), font, font_color, 5 , 56 );
 		// Set up player info for drawing ]
+
+			Uint debugging_text_key = text_engine->add_text( "[debugging text]", font, font_color, 200, 5 );
 
 	/******************************************
 	*** Start Loop
@@ -286,12 +288,23 @@ int main(int argc, char* args[]){
 				}
 			// handle key strokes ]
 
-				if (world->get_enemies()->size() > 0) {
-					world->get_enemies()->at(0)->move_left();
+			// [ move enemies
+				for( Uint i = 0; i < world->get_enemies()->size(); i++ ){
+					world->get_enemies()->at(i)->move_left();
+				}
+			// move enemies ]
+
+				for(Uint i = 0; i < world->get_enemies()->size(); i++){
+					if(world->get_enemies()->at(i)->check_collision(player) == true){
+						text_engine->update_text( debugging_text_key, "Player and Enemy Collision!" );
+					}else{
+						text_engine->update_text( debugging_text_key, "Idle" );
+					}
 				}
 
 
 			// [ show enemies
+
 				if(world->get_enemies()->empty() == false){
 					for(Uint i = 0; i < world->get_enemies()->size(); i++){
 						if(world->get_enemies()->at(i)->check_collision(player) == true){
@@ -323,13 +336,12 @@ int main(int argc, char* args[]){
 			// show enemies ]
 
 			// [ shoot existing bullets
-				if(world->get_bullets()->empty() == false){
-					// loop through all elements
-					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
-						world->get_bullets()->at(i)->move();
+				// loop through all elements
+				 for(Uint i = 0; i < world->get_bullets()->size(); i++){
+					world->get_bullets()->at(i)->move();
 
-						for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
-							if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
+					for( Uint j = 0; j < world->get_enemies()->size(); j++ ){
+						if(world->get_bullets()->at(i)->check_collision( world->get_enemies()->at(j)) == true ){
 
 								player->set_points(10);
 
@@ -345,32 +357,38 @@ int main(int argc, char* args[]){
 								);
 
 
-								delete world->get_bullets()->at(i);
-								world->get_bullets()->erase(world->get_bullets()->begin() + i);
+							world->delete_bullet(i);
+							world->delete_enemy(j);
 
-								delete world->get_enemies()->at(j);
-								world->get_enemies()->erase(world->get_enemies()->begin() + j);
-							}
-						}
-					 }
-
-					 // Feb 13, 2009: separated deletion loop
-					 // because the elements were pulled forwards
-					 // before all the elements were off the screen
-					 // causing some lag in the first bullet.
-					 for(Uint i = 0; i < world->get_bullets()->size(); i++){
-						 // if bullet is off screen erase it
-						if(world->get_bullets()->at(i)->get_x_offset() > SCREEN_WIDTH
-							 || world->get_bullets()->at(i)->get_y_offset() > SCREEN_HEIGHT
-							 || world->get_bullets()->at(i)->get_x_offset() - world->get_bullets()->at(i)->get_width() < 0
-							 || world->get_bullets()->at(i)->get_y_offset() - world->get_bullets()->at(i)->get_height() < 0
-						)
-						{
-							delete world->get_bullets()->at(i);
+							/*delete world->get_bullets()->at(i);
 							world->get_bullets()->erase(world->get_bullets()->begin() + i);
+
+							delete world->get_enemies()->at(j);
+							world->get_enemies()->erase(world->get_enemies()->begin() + j);*/
 						}
-					 }
+					}
+				 }
+
+				// Feb 13, 2009: separated deletion loop
+				// because the elements were pulled forwards
+				// before all the elements were off the screen
+				// causing some lag in the first bullet.
+				for(Uint i = 0; i < world->get_bullets()->size(); i++){
+					 // if bullet is off screen erase it
+					if( world->get_bullets()->at(i)->is_offscreen() == true )
+					{
+						world->delete_bullet(i);
+					}
 				}
+
+				for(Uint i = 0; i < world->get_enemies()->size(); i++){
+					if( world->get_enemies()->at(i)->is_offscreen() == true )
+					{
+						world->delete_enemy(i);
+					}
+				}
+
+
 			// draw the bullets
 				for(Uint i = 0; i < world->get_bullets()->size(); i++){
 					SDL::apply_surface( int( world->get_bullets()->at(i)->get_x_offset() ), int( world->get_bullets()->at(i)->get_y_offset() ), bullet_sprite, screen );
@@ -400,14 +418,16 @@ int main(int argc, char* args[]){
 
 
 			// [ update screen
-				if( SDL_Flip( screen ) == -1 ){
+				if( SDL_Flip( screen ) == -1 )
+				{
 					return 1;
 				}
 			// update screen ]
 
 
 			// [ calculate FPS
-				if( fps_update.get_ticks() > 10000 ){
+				if( fps_update.get_ticks() > 10000 )
+				{
 					fps_update.start();
 					frames = 0;
 				}

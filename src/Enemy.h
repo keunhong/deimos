@@ -49,7 +49,9 @@ public:
 		points = 0;
 	}
 
-
+	void move_left(){
+		this->set_x_offset( this->get_x_offset() - this->get_max_speed() );
+	}
 };
 
 #endif /* ENEMY_H_ */
