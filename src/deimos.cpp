@@ -316,8 +316,7 @@ int main(int argc, char* args[]){
 								);
 
 							world->get_enemies()->at(i)->check_collision(player) == false;
-							delete world->get_enemies()->at(i);
-							world->get_enemies()->erase(world->get_enemies()->begin() + i);
+							world->delete_enemy(i);
 							player->set_health(-10);
 
 							// update status text
